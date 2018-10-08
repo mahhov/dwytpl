@@ -1,0 +1,18 @@
+{
+  "name": "dwytpl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "run.js",
+  "scripts": {
+    "run": "node src/run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bs-better-stream": "^1.8.0",
+    "file-walk-stream": "^1.4.0",
+    "ytdl-core": "^0.25.2"
+  }
+}

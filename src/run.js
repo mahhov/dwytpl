@@ -26,18 +26,18 @@ const PARALLEL_DOWNLOAD_COUNT = 10;
     });
     let videos = playlist.getVideos().throttle(PARALLEL_DOWNLOAD_COUNT);
 
-    await files;
+    await files.complete;
 
     summary.onStart();
 
     videos.stream
-        .productX(files, (video, file) => video.isSame(file.file), video => video.downloaded = true);
+        .productX(files, (video, {file}) => video.isSame(file), video => video.downloaded = true);
     let downloaded = videos.stream
         .if(video => video.downloaded);
 
     downloaded.then
         .each(videos.nextOne)
-        .each(() => summary.incrementPredownloaded);
+        .each(() => summary.incrementPredownloaded());
 
     downloaded.else
         .map(video => video.download())
@@ -53,4 +53,3 @@ const PARALLEL_DOWNLOAD_COUNT = 10;
 // todo
 // count and display errors. errors should trigger throttle.next
 // color output to show status
-// why error when no exist downloads dir

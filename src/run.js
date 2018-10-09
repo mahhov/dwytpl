@@ -24,28 +24,26 @@ const PARALLEL_DOWNLOAD_COUNT = 10;
         printer.setTitleLine(0, `${title} [${length}]`);
         summary.setTotal(length);
     });
-    let videos = playlist.getVideos().throttle(PARALLEL_DOWNLOAD_COUNT);
+    let videos = playlist.getVideos();
 
     await files.complete;
 
     summary.onStart();
 
-    videos.stream
-        .productX(files, (video, {file}) => video.isSame(file), video => video.downloaded = true);
-    let downloaded = videos.stream
+    videos.productX(files, (video, {file}) => video.isSame(file), video => video.downloaded = true);
+    let downloaded = videos
         .if(video => video.downloaded);
 
-    downloaded.then
-        .each(videos.nextOne)
-        .each(() => summary.incrementPredownloaded());
+    downloaded.then.each(() => summary.incrementPredownloaded());
 
-    downloaded.else
+    let toDownload = downloaded.else.throttle(PARALLEL_DOWNLOAD_COUNT);
+    toDownload.stream
         .map(video => video.download())
         .set('index', (_, i) => i)
         .each(({stream, index}) => stream.each(text => printer.setProgressLine(index, text)))
         .set('promise.promise', status => status.promise.promise)
         .waitOn('promise.promise')
-        .each(videos.nextOne)
+        .each(toDownload.nextOne)
         .each(() => summary.incrementDownloaded())
         .each(({index}) => printer.removeProgressLine(index))
 })();

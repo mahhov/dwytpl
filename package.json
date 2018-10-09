@@ -4,7 +4,7 @@
   "description": "",
   "main": "run.js",
   "scripts": {
-    "run": "node src/run"
+    "start": "node src/run"
   },
   "keywords": [],
   "author": "",
@@ -12,7 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bs-better-stream": "^1.8.0",
-    "file-walk-stream": "^1.4.0",
+    "file-walk-stream": "^2.1.0",
     "ytdl-core": "^0.25.2"
   }
 }

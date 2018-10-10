@@ -48,6 +48,3 @@ const PARALLEL_DOWNLOAD_COUNT = 10;
             () => summary.incrementDownloaded())
         .each(({index}) => printer.removeProgressLine(index))
 })();
-
-// todo
-// color output to show status

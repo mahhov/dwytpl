@@ -65,19 +65,24 @@ class Status {
         return `${(time / 60 / 60).toFixed(2)} hours`;
     }
 
-    initializationStatus() { /* abstract */
+    initializationStatus() {
+    	/* abstract */
     }
 
-    startStatus() { /* abstract */
+    startStatus() {
+    	/* abstract */
     }
 
-    progressStatus(percent, time, size, ...additionalParamters) { /* abstract */
+    progressStatus(percent, time, size, ...additionalParamters) {
+    	/* abstract */
     }
 
-    successStatus(time) { /* abstract */
+    successStatus(time) {
+    	/* abstract */
     }
 
-    failureStatus() { /* abstract */
+    failureStatus(error) {
+    	/* abstract */
     }
 }
 

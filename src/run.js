@@ -43,12 +43,11 @@ const PARALLEL_DOWNLOAD_COUNT = 10;
         .each(({stream, index}) => stream.each(text => printer.setProgressLine(index, text)))
         .waitOn('promise')
         .each(toDownload.nextOne)
-        .filterEach(status => status.promise.isRejected,
+        .filterEach(status => status.promise && status.promise.isRejected,
             () => summary.incrementFailed(),
             () => summary.incrementDownloaded())
         .each(({index}) => printer.removeProgressLine(index))
 })();
 
 // todo
-// failed vidoes often outputing successStatus "done downloading" even though fail counter incremented
 // color output to show status

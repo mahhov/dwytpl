@@ -6,7 +6,7 @@ class Summary {
         this.total = 0;
         this.predownloaded = 0;
         this.downloaded = 0;
-	    this.failed = 0;
+        this.failed = 0;
 
         this.status = new SummaryStatus();
         this.stream = this.status.stream;
@@ -29,10 +29,10 @@ class Summary {
         this.updateSummary();
     }
 
-	incrementFailed() {
-		this.failed++;
-		this.updateSummary();
-	}
+    incrementFailed() {
+        this.failed++;
+        this.updateSummary();
+    }
 
     updateSummary() {
         this.status.onProgress(
@@ -41,7 +41,7 @@ class Summary {
             this.total,
             this.predownloaded,
             this.downloaded,
-	        this.failed);
+            this.failed);
     }
 
     onStart() {

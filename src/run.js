@@ -43,7 +43,7 @@ const PARALLEL_DOWNLOAD_COUNT = 10;
         .each(({stream, index}) => stream.each(text => printer.setProgressLine(index, text)))
         .waitOn('promise')
         .each(toDownload.nextOne)
-	    .filterEach(status => status.promise.isRejected,
+        .filterEach(status => status.promise.isRejected,
             () => summary.incrementFailed(),
             () => summary.incrementDownloaded())
         .each(({index}) => printer.removeProgressLine(index))

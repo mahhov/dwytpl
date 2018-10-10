@@ -66,23 +66,23 @@ class Status {
     }
 
     initializationStatus() {
-    	/* abstract */
+        /* abstract */
     }
 
     startStatus() {
-    	/* abstract */
+        /* abstract */
     }
 
     progressStatus(percent, time, size, ...additionalParamters) {
-    	/* abstract */
+        /* abstract */
     }
 
     successStatus(time) {
-    	/* abstract */
+        /* abstract */
     }
 
     failureStatus(error) {
-    	/* abstract */
+        /* abstract */
     }
 }
 

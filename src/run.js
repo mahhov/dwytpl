@@ -41,13 +41,14 @@ const PARALLEL_DOWNLOAD_COUNT = 10;
         .map(video => video.download())
         .set('index', (_, i) => i)
         .each(({stream, index}) => stream.each(text => printer.setProgressLine(index, text)))
-        .set('promise.promise', status => status.promise.promise)
-        .waitOn('promise.promise')
+        .waitOn('promise')
         .each(toDownload.nextOne)
-        .each(() => summary.incrementDownloaded())
+	    .filterEach(status => status.promise.isRejected,
+            () => summary.incrementFailed(),
+            () => summary.incrementDownloaded())
         .each(({index}) => printer.removeProgressLine(index))
 })();
 
 // todo
-// count and display errors. errors should trigger throttle.next
+// failed vidoes often outputing successStatus "done downloading" even though fail counter incremented
 // color output to show status

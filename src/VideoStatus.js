@@ -30,8 +30,8 @@ class VideoStatus extends Status {
         return `done downloading (${time})`;
     }
 
-    failureStatus() {
-        return 'failed to download';
+    failureStatus(error) {
+        return 'failed to download. ' + error.message;
     }
 }
 

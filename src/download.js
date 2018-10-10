@@ -9,19 +9,13 @@ prepareDir = () => fs.existsSync(DOWNLOAD_DIR) || fs.mkdirSync(DOWNLOAD_DIR);
 downloadStream = (stream, name) => {
 	let status = new VideoStatus(name);
 
-	let errorHandler = error => {
-		console.log('3rr', error);
-		console.log('video not downloaded', name);
-		status.onFail();
-	};
-
 	try {
 		let writeStream = new MemoryWriteStream();
 		stream.pipe(writeStream);
 
 		stream.once('response', () => status.onStart());
 
-		stream.on('error', errorHandler);
+		stream.on('error', error => status.onFail(error));
 
 		stream.on('progress', (chunkLength, downloadedSize, totalSize) =>
 			status.onProgress(downloadedSize, totalSize));
@@ -30,7 +24,7 @@ downloadStream = (stream, name) => {
 			writeStream.writeToFile(`${DOWNLOAD_DIR}/${name}.webm`, () => status.onSuccess()));
 
 	} catch (error) {
-		errorHandler(error);
+		status.onFail(error);
 	}
 
 	return status;

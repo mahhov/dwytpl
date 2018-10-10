@@ -25,7 +25,6 @@ class SplitPrinter {
     removeProgressLine(index) {
         this.removedProgressLines.push(index);
         this.addMessageLine(this.progressLines[index]);
-        // this.print();
     }
 
     addMessageLine(line) {

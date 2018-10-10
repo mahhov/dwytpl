@@ -5,8 +5,8 @@ class SummaryStatus extends Status {
         return ['fetching', '...'];
     }
 
-    progressStatus(percent, time, size, total, predownloaded, downloaded) {
-        let counts = `already downloaded ${predownloaded}. downloaded ${downloaded}. remianing ${total - predownloaded - downloaded}. total ${total}`;
+    progressStatus(percent, time, size, total, predownloaded, downloaded, failed) {
+        let counts = `already downloaded ${predownloaded}. downloaded ${downloaded}. failed ${failed}. remianing ${total - predownloaded - downloaded}. total ${total}`;
         let estimate = `${percent} (${time} remaining)`;
         return [counts, estimate];
     }

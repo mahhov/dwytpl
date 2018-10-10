@@ -4,7 +4,8 @@ const $tream = require('bs-better-stream');
 class Status {
     constructor() {
         this.stream = $tream();
-        this.promise = new PromiseCreator();
+        this.promiseWrap = new PromiseCreator();
+        this.promise = this.promiseWrap.promise;
     }
 
     setStatus(status) {
@@ -36,12 +37,12 @@ class Status {
     onSuccess() {
         let time = Status.timeFormat(this.secondsPassed_);
         this.setStatus(this.successStatus(time));
-        this.promise.resolve();
+        this.promiseWrap.resolve();
     }
 
-    onFail() {
-        this.setStatus(this.failureStatus());
-        this.promise.reject();
+    onFail(error) {
+        this.setStatus(this.failureStatus(error));
+        this.promiseWrap.reject(error);
     }
 
     get secondsPassed_() {

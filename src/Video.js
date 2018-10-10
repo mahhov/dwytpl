@@ -5,7 +5,7 @@ class Video {
     constructor(number, id, title, thumbnail) {
         this.number = number;
         this.id = id;
-        this.title = title;
+        this.title = Video.cleanTitle(title);
         this.thumbnail = thumbnail;
     }
 
@@ -25,6 +25,10 @@ class Video {
 
     isSame(name) {
         return name.includes(`-${this.id}-${this.title}.`);
+    }
+
+    static cleanTitle(title) {
+        return title.replace(/[^\w ]/g, '').replace(/ +/g, '_');
     }
 }
 

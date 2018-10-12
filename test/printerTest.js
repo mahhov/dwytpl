@@ -1,4 +1,4 @@
-const printer = require('./printer');
+const printer = require('../src/printer');
 
 printer.clear();
 for (let i = 0; i < 50; i++)

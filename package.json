@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "bs-better-stream": "^1.8.0",
+    "bs-better-stream": "^1.8.5",
     "file-walk-stream": "^2.1.0",
     "ytdl-core": "^0.25.2"
   }

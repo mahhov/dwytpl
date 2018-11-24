@@ -3,10 +3,8 @@ const Summary = require('./Summary');
 const file = require('./file');
 const Playlist = require('./Playlist');
 
-const PARALLEL_DOWNLOAD_COUNT = 10;
-
-let sync = async playlistId => {
-    let printer = new SplitPrinter(3, PARALLEL_DOWNLOAD_COUNT, 30);
+let sync = async (playlistId, parallelDowndloadCount = 10) => {
+    let printer = new SplitPrinter(3, parallelDowndloadCount, 30);
 
     let summary = new Summary();
     summary.stream.each(([line1, line2]) => {
@@ -33,7 +31,7 @@ let sync = async playlistId => {
 
     downloaded.then.each(() => summary.incrementPredownloaded());
 
-    let toDownload = downloaded.else.throttle(PARALLEL_DOWNLOAD_COUNT);
+    let toDownload = downloaded.else.throttle(parallelDowndloadCount);
     toDownload.stream
         .map(video => video.download())
         .set('index', (_, i) => i)

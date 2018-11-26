@@ -1,9 +1,9 @@
 const SplitPrinter = require('./SplitPrinter');
 const Summary = require('./Summary');
-const file = require('./file');
+const FileWalker = require('file-walk-stream');
 const Playlist = require('./Playlist');
 
-let sync = async (playlistId, parallelDowndloadCount = 10) => {
+let sync = async (downloadDir, playlistId, parallelDowndloadCount = 10) => {
     let printer = new SplitPrinter(3, parallelDowndloadCount, 30);
 
     let summary = new Summary();
@@ -12,7 +12,7 @@ let sync = async (playlistId, parallelDowndloadCount = 10) => {
         printer.setTitleLine(2, line2);
     });
 
-    let files = file.getFiles();
+    let files = FileWalker.walk(downloadDir);
 
     let playlist = new Playlist(playlistId);
     playlist.getOverview().then(({title, length}) => {
@@ -33,7 +33,7 @@ let sync = async (playlistId, parallelDowndloadCount = 10) => {
 
     let toDownload = downloaded.else.throttle(parallelDowndloadCount);
     toDownload.stream
-        .map(video => video.download())
+        .map(video => video.download(downloadDir))
         .set('index', (_, i) => i)
         .each(({stream, index}) => stream.each(text => printer.setProgressLine(index, text)))
         .waitOn('promise')

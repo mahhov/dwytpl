@@ -9,9 +9,9 @@ class Video {
         this.thumbnail = thumbnail;
     }
 
-    download() {
-        download.prepareDir();
-        return this.downloadStatus = download.downloadStream(this.getStream_(), this.getName());
+    download(downloadDir) {
+        download.prepareDir(downloadDir);
+        return this.downloadStatus = download.downloadStream(downloadDir, this.getStream_(), this.getName());
     }
 
     getStream_() {

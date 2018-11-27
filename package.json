@@ -1,18 +1,30 @@
 {
   "name": "dwytpl",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.1.0",
+  "description": "download youtube playlists",
   "main": "run.js",
   "scripts": {
     "test": "node test/run"
   },
   "keywords": [],
-  "author": "",
+  "author": "mahhov",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
     "bs-better-stream": "^1.8.5",
     "file-walk-stream": "^2.1.0",
     "ytdl-core": "^0.25.2"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahhov/dwytpl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mahhov/dwytpl/issues"
+  },
+  "homepage": "https://github.com/mahhov/dwytpl#readme"
 }

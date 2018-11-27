@@ -3,4 +3,4 @@
 const path = require('path');
 const {sync} = require('../src/syncher');
 
-sync(path.resolve(__dirname, '../downloads'), 'PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2');
+sync(path.resolve(__dirname, '../downloads'), 'OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw');

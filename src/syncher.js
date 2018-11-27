@@ -1,9 +1,8 @@
-const AccumulatePrinter = require('./print/AccumulatePrinter');
 const Summary = require('./Summary');
 const FileWalker = require('file-walk-stream');
 const Playlist = require('./Playlist');
 
-let sync = async (downloadDir, playlistId, printer = new AccumulatePrinter(3, parallelDowndloadCount, 30), parallelDowndloadCount = 10) => {
+let synch = async (downloadDir, playlistId, printer, parallelDowndloadCount) => {
     let summary = new Summary();
     summary.stream.each(([line1, line2]) => {
         printer.setTitleLine(1, line1);
@@ -42,4 +41,4 @@ let sync = async (downloadDir, playlistId, printer = new AccumulatePrinter(3, pa
         .each(({index}) => printer.removeProgressLine(index))
 };
 
-module.exports = {sync};
+module.exports = {synch};

@@ -2,7 +2,7 @@
   "name": "dwytpl",
   "version": "1.1.0",
   "description": "download youtube playlists",
-  "main": "run.js",
+  "main": "src/index",
   "scripts": {
     "test": "node test/run"
   },

@@ -4,7 +4,7 @@
   "description": "",
   "main": "run.js",
   "scripts": {
-    "start": "node src/run"
+    "test": "node test/run"
   },
   "keywords": [],
   "author": "",

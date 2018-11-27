@@ -11,7 +11,7 @@ class SplitPrinter extends AccumulatePrinter {
     }
 
     setTitleLine(index, line) {
-        super.setTitleLine(index.line);
+        super.setTitleLine(index, line);
         this.print();
     }
 

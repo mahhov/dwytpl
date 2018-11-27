@@ -1,10 +1,10 @@
-const SplitPrinter = require('./SplitPrinter');
+const AccumulatePrinter = require('./print/AccumulatePrinter');
 const Summary = require('./Summary');
 const FileWalker = require('file-walk-stream');
 const Playlist = require('./Playlist');
 
 let sync = async (downloadDir, playlistId, parallelDowndloadCount = 10) => {
-    let printer = new SplitPrinter(3, parallelDowndloadCount, 30);
+    let printer = new AccumulatePrinter(3, parallelDowndloadCount, 30);
 
     let summary = new Summary();
     summary.stream.each(([line1, line2]) => {

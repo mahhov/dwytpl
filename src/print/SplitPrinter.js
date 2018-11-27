@@ -1,34 +1,32 @@
 const printer = require('./printer');
+const AccumulatePrinter = require('./AccumulatePrinter');
 
-class SplitPrinter {
+class SplitPrinter extends AccumulatePrinter {
     constructor(titleSize, progressSize, messageSize) {
+        super();
         this.titleSize = titleSize;
         this.progressSize = progressSize;
         this.messageSize = messageSize;
-        this.titleLines = [];
-        this.progressLines = [];
-        this.removedProgressLines = [];
-        this.messageLines = [];
         printer.clear();
     }
 
     setTitleLine(index, line) {
-        this.titleLines[index] = line;
+        super.setTitleLine(index.line);
         this.print();
     }
 
     setProgressLine(index, line) {
-        this.progressLines[index] = line;
+        super.setProgressLine(index, line);
         this.print();
     }
 
     removeProgressLine(index) {
-        this.removedProgressLines.push(index);
-        this.addMessageLine(this.progressLines[index]);
+        super.removeProgressLine(index);
+        this.print();
     }
 
     addMessageLine(line) {
-        this.messageLines.push(line);
+        super.addMessageLine(line);
         this.print();
     }
 

@@ -15,7 +15,7 @@ dwytpl(path, playlistId);
 
 ## api
 
-`Printer dwytp(string downloadDir, string playlistId, int parallelDowndloadCount = 10, boolean print = false)`
+`Printer dwytp(string downloadDir, string playlistId, int parallelDownloadCount = 10, boolean print = false)`
 
 ###`downloadDir` 
 
@@ -25,7 +25,7 @@ target directory to save downloaded videos to. Interrupted or incomplete video d
 
 youtube playlist id
 
-### `parallelDowndloadCount`
+### `parallelDownloadCount`
 
 number of concurrent video downloads. Defaults to 10.
 

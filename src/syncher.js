@@ -2,7 +2,7 @@ const Summary = require('./Summary');
 const FileWalker = require('file-walk-stream');
 const Playlist = require('./Playlist');
 
-let synch = async (downloadDir, playlistId, printer, parallelDowndloadCount) => {
+let synch = async (downloadDir, playlistId, printer, parallelDownloadCount) => {
     let summary = new Summary();
     summary.stream.each(([line1, line2]) => {
         printer.setTitleLine(1, line1);
@@ -28,7 +28,7 @@ let synch = async (downloadDir, playlistId, printer, parallelDowndloadCount) => 
 
     downloaded.then.each(() => summary.incrementPredownloaded());
 
-    let toDownload = downloaded.else.throttle(parallelDowndloadCount);
+    let toDownload = downloaded.else.throttle(parallelDownloadCount);
     toDownload.stream
         .map(video => video.download(downloadDir))
         .set('index', (_, i) => i)

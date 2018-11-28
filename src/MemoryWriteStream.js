@@ -4,16 +4,16 @@ const fs = require('fs');
 class MemoryWriteStream extends stream.Writable {
 	constructor() {
 		super();
-		this.chunks = []
+		this.chunks_ = []
 	}
 
 	_write(chunk, enc, next) {
-		this.chunks.push(chunk);
+		this.chunks_.push(chunk);
 		next();
 	}
 
 	writeToFile(path, callback = () => {}) {
-		let buffer = Buffer.concat(this.chunks);
+		let buffer = Buffer.concat(this.chunks_);
 		let writeStream = fs.writeFile(path, buffer, callback);
 	}
 }

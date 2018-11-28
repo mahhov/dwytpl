@@ -3,49 +3,49 @@ const SummaryStatus = require('./SummaryStatus');
 
 class Summary {
     constructor() {
-        this.total = 0;
-        this.predownloaded = 0;
-        this.downloaded = 0;
-        this.failed = 0;
+        this.total_ = 0;
+        this.predownloaded_ = 0;
+        this.downloaded_ = 0;
+        this.failed_ = 0;
 
-        this.status = new SummaryStatus();
-        this.stream = this.status.stream;
+        this.status_ = new SummaryStatus();
+        this.stream = this.status_.stream;
 
-        this.updateSummary();
+        this.updateSummary_();
     }
 
     setTotal(total) {
-        this.total = total;
-        this.updateSummary();
+        this.total_ = total;
+        this.updateSummary_();
     }
 
     incrementPredownloaded() {
-        this.predownloaded++;
-        this.updateSummary();
+        this.predownloaded_++;
+        this.updateSummary_();
     }
 
     incrementDownloaded() {
-        this.downloaded++;
-        this.updateSummary();
+        this.downloaded_++;
+        this.updateSummary_();
     }
 
     incrementFailed() {
-        this.failed++;
-        this.updateSummary();
+        this.failed_++;
+        this.updateSummary_();
     }
 
-    updateSummary() {
-        this.status.onProgress(
-            this.downloaded,
-            this.total - this.predownloaded - this.failed,
-            this.total,
-            this.predownloaded,
-            this.downloaded,
-            this.failed);
+    updateSummary_() {
+        this.status_.onProgress(
+            this.downloaded_,
+            this.total_ - this.predownloaded_ - this.failed_,
+            this.total_,
+            this.predownloaded_,
+            this.downloaded_,
+            this.failed_);
     }
 
     onStart() {
-        this.status.onStart();
+        this.status_.onStart();
     }
 }
 

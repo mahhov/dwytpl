@@ -3,13 +3,13 @@ const Status = require('./Status');
 class VideoStatus extends Status {
     constructor(prefix) {
         super();
-        this.prefix = prefix;
+        this.prefix_ = prefix;
         super.onInitialization_();
     }
 
     setStatus_(status) {
         const PREFIX_MAX_LENGTH = 45, WHITESPACE = 5;
-        let prefix = this.prefix.slice(0, PREFIX_MAX_LENGTH).padEnd(PREFIX_MAX_LENGTH + WHITESPACE);
+        let prefix = this.prefix_.slice(0, PREFIX_MAX_LENGTH).padEnd(PREFIX_MAX_LENGTH + WHITESPACE);
         status = prefix + status;
         super.setStatus_(status);
     }

@@ -3,31 +3,30 @@ const download = require('./download');
 
 class Video {
     constructor(number, id, title, thumbnail) {
-        this.number = number;
-        this.id = id;
-        this.title = Video.cleanTitle(title);
-        this.thumbnail = thumbnail;
+        this.number_ = number;
+        this.id_ = id;
+        this.title_ = Video.cleanTitle_(title);
     }
 
     download(downloadDir) {
         download.prepareDir(downloadDir);
-        return this.downloadStatus = download.downloadStream(downloadDir, this.getStream_(), this.getName());
+        return download.downloadStream(downloadDir, this.getStream_(), this.getName_());
     }
 
     getStream_() {
-        return this.streamCache = this.streamCache || ytdl(this.id, {quality: 'lowest'});
+        return this.streamCache_ = this.streamCache_ || ytdl(this.id_, {quality: 'lowest'});
     }
 
-    getName() {
-        let numberString = this.number.toString().padStart(5, 0);
-        return `${numberString}-${this.id}-${this.title}`;
+    getName_() {
+        let numberString = this.number_.toString().padStart(5, 0);
+        return `${numberString}-${this.id_}-${this.title_}`;
     }
 
     isSame(name) {
-        return name.includes(`-${this.id}-${this.title}.`);
+        return name.includes(`-${this.id_}-${this.title_}.`);
     }
 
-    static cleanTitle(title) {
+    static cleanTitle_(title) {
         return title.replace(/[^\w ]/g, '').replace(/ +/g, '_');
     }
 }

@@ -4,8 +4,8 @@ const $tream = require('bs-better-stream');
 class Status {
     constructor() {
         this.stream = $tream();
-        this.promiseWrap = new PromiseCreator();
-        this.promise = this.promiseWrap.promise;
+        this.promiseWrap_ = new PromiseCreator();
+        this.promise = this.promiseWrap_.promise;
     }
 
     setStatus_(status) {
@@ -19,7 +19,7 @@ class Status {
 
     onStart() {
         this.setStatus_(this.startStatus_());
-        this.startTime = Date.now();
+        this.startTime_ = Date.now();
     }
 
     onProgress(downloadedSize, totalSize, ...additionalParamters) {
@@ -37,16 +37,16 @@ class Status {
     onSuccess() {
         let time = Status.timeFormat_(this.secondsPassed_);
         this.setStatus_(this.successStatus_(time));
-        this.promiseWrap.resolve();
+        this.promiseWrap_.resolve();
     }
 
     onFail(error) {
         this.setStatus_(this.failureStatus_(error));
-        this.promiseWrap.reject(error);
+        this.promiseWrap_.reject(error);
     }
 
     get secondsPassed_() {
-        return (Date.now() - this.startTime) / 1000;
+        return (Date.now() - this.startTime_) / 1000;
     }
 
     static percentFormat_(percent) {

@@ -8,17 +8,17 @@ class Status {
         this.promise = this.promiseWrap.promise;
     }
 
-    setStatus(status) {
+    setStatus_(status) {
         this.stream.write(status);
     }
 
     // should be called at end of subclass constructor
-    onInitialization() {
-        this.setStatus(this.initializationStatus());
+    onInitialization_() {
+        this.setStatus_(this.initializationStatus_());
     }
 
     onStart() {
-        this.setStatus(this.startStatus());
+        this.setStatus_(this.startStatus_());
         this.startTime = Date.now();
     }
 
@@ -27,21 +27,21 @@ class Status {
         let secondsPassed = this.secondsPassed_;
         let estimatedTimeRemaining = secondsPassed / floatDownloaded - secondsPassed;
 
-        let percent = Status.percentFormat(floatDownloaded);
-        let size = Status.sizeFormat(totalSize);
-        let time = Status.timeFormat(estimatedTimeRemaining);
+        let percent = Status.percentFormat_(floatDownloaded);
+        let size = Status.sizeFormat_(totalSize);
+        let time = Status.timeFormat_(estimatedTimeRemaining);
 
-        this.setStatus(this.progressStatus(percent, time, size, ...additionalParamters));
+        this.setStatus_(this.progressStatus_(percent, time, size, ...additionalParamters));
     }
 
     onSuccess() {
-        let time = Status.timeFormat(this.secondsPassed_);
-        this.setStatus(this.successStatus(time));
+        let time = Status.timeFormat_(this.secondsPassed_);
+        this.setStatus_(this.successStatus_(time));
         this.promiseWrap.resolve();
     }
 
     onFail(error) {
-        this.setStatus(this.failureStatus(error));
+        this.setStatus_(this.failureStatus_(error));
         this.promiseWrap.reject(error);
     }
 
@@ -49,15 +49,15 @@ class Status {
         return (Date.now() - this.startTime) / 1000;
     }
 
-    static percentFormat(percent) {
+    static percentFormat_(percent) {
         return `${(percent * 100).toFixed(2)}%`;
     }
 
-    static sizeFormat(size) {
+    static sizeFormat_(size) {
         return `${(size / 1024 / 1024).toFixed(2)} MB`;
     }
 
-    static timeFormat(time) {
+    static timeFormat_(time) {
         if (time < 3 * 60) // 3 minutes
             return `${time.toFixed(2)} seconds`;
         else if (time < 3 * 60 * 60) // 3 hours
@@ -65,23 +65,23 @@ class Status {
         return `${(time / 60 / 60).toFixed(2)} hours`;
     }
 
-    initializationStatus() {
+    initializationStatus_() {
         /* abstract */
     }
 
-    startStatus() {
+    startStatus_() {
         /* abstract */
     }
 
-    progressStatus(percent, time, size, ...additionalParamters) {
+    progressStatus_(percent, time, size, ...additionalParamters) {
         /* abstract */
     }
 
-    successStatus(time) {
+    successStatus_(time) {
         /* abstract */
     }
 
-    failureStatus(error) {
+    failureStatus_(error) {
         /* abstract */
     }
 }

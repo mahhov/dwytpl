@@ -4,33 +4,33 @@ class VideoStatus extends Status {
     constructor(prefix) {
         super();
         this.prefix = prefix;
-        super.onInitialization();
+        super.onInitialization_();
     }
 
-    setStatus(status) {
+    setStatus_(status) {
         const PREFIX_MAX_LENGTH = 45, WHITESPACE = 5;
         let prefix = this.prefix.slice(0, PREFIX_MAX_LENGTH).padEnd(PREFIX_MAX_LENGTH + WHITESPACE);
         status = prefix + status;
-        super.setStatus(status);
+        super.setStatus_(status);
     }
 
-    initializationStatus() {
+    initializationStatus_() {
         return 'waiting to start';
     }
 
-    startStatus() {
+    startStatus_() {
         return 'started';
     }
 
-    progressStatus(percent, time, size) {
+    progressStatus_(percent, time, size) {
         return `${percent} (${time} remaining) [${size}]`;
     }
 
-    successStatus(time) {
+    successStatus_(time) {
         return `done downloading (${time})`;
     }
 
-    failureStatus(error) {
+    failureStatus_(error) {
         return 'failed to download. ' + error.message;
     }
 }

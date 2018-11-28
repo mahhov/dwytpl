@@ -1,11 +1,11 @@
 const Status = require('./Status');
 
 class SummaryStatus extends Status {
-    startStatus() {
+    startStatus_() {
         return ['fetching', '...'];
     }
 
-    progressStatus(percent, time, size, total, predownloaded, downloaded, failed) {
+    progressStatus_(percent, time, size, total, predownloaded, downloaded, failed) {
         let counts = `already downloaded ${predownloaded}. downloaded ${downloaded}. failed ${failed}. remianing ${total - predownloaded - downloaded}. total ${total}`;
         let estimate = `${percent} (${time} remaining)`;
         return [counts, estimate];

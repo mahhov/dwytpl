@@ -1,4 +1,4 @@
-const SplitPrinter = require('../src/SplitPrinter');
+const SplitPrinter = require('../src/print/SplitPrinter');
 
 let printer = new SplitPrinter(2, 3, 3);
 
@@ -26,7 +26,7 @@ printer.addMessageLine_('message 4');
 console.log(`
 EXPECTED:
 
-'title 0b
+title 0b
 title 1b
 
 progress 1b
@@ -35,5 +35,5 @@ progress 4
 
 message 2
 message 3
-message 4'
+message 4
 `);

@@ -34,13 +34,14 @@ class SplitPrinter extends AccumulatePrinter {
         this.titleLines.forEach((line, i) =>
             printer.line(i, line));
 
-        let skipLines = 0;
-        this.progressLines.forEach((line, i) => {
-            if (this.removedProgressLines.includes(i))
-                skipLines++;
-            else if (i - skipLines < this.progressSize)
-                printer.line(i - skipLines + this.titleSize + 1, line);
-        });
+        for (let i = 0, j = 0; i < this.progressSize; i++, j++) {
+            while (this.removedProgressLines.includes(j))
+                j++;
+            if (j < this.progressLines.length)
+                printer.line(i + this.titleSize + 1, this.progressLines[i]);
+            else
+                printer.line(i + this.titleSize + 1, '');
+        }
 
         let firstMessageIndex = Math.max(0, this.messageLines.length - this.messageSize);
         for (let i = firstMessageIndex; i < this.messageLines.length; i++)

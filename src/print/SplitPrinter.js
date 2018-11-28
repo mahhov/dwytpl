@@ -25,8 +25,8 @@ class SplitPrinter extends AccumulatePrinter {
         this.print();
     }
 
-    addMessageLine(line) {
-        super.addMessageLine(line);
+    addMessageLine_(line) {
+        super.addMessageLine_(line);
         this.print();
     }
 

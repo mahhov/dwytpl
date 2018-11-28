@@ -17,11 +17,11 @@ printer.removeProgressLine(3);
 printer.removeProgressLine(0);
 printer.removeProgressLine(2);
 
-printer.addMessageLine('message 0');
-printer.addMessageLine('message 1');
-printer.addMessageLine('message 2');
-printer.addMessageLine('message 3');
-printer.addMessageLine('message 4');
+printer.addMessageLine_('message 0');
+printer.addMessageLine_('message 1');
+printer.addMessageLine_('message 2');
+printer.addMessageLine_('message 3');
+printer.addMessageLine_('message 4');
 
 console.log(`
 EXPECTED:

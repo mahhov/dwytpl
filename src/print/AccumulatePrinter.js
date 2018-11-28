@@ -18,10 +18,10 @@ class AccumulatePrinter {
 
     removeProgressLine(index) {
         this.removedProgressLines.push(index);
-        this.addMessageLine(this.progressLines[index]);
+        this.addMessageLine_(this.progressLines[index]);
     }
 
-    addMessageLine(line) {
+    addMessageLine_(line) {
         this.messageLines.push(line);
     }
 }

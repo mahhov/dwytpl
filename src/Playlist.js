@@ -23,7 +23,7 @@ class Playlist {
         let pages = $tream();
         let responses = pages
             .map(this.getPage_.bind(this))
-            .wait()
+            .wait();
         responses
             .pluck('nextPageToken')
             .filter(nextPage => nextPage)

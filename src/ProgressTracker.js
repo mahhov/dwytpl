@@ -27,7 +27,8 @@ class ProgressTracker {
 
     updateProgressStream_() {
         let progress = this.progressLines_
-            .filter((_, i) => !this.removedProgressLines.includes(i));
+            .filter((_, i) => !this.removedProgressLines_.includes(i));
+        this.progressStream.write(progress);
     }
 
     updateMessageStreams_() {

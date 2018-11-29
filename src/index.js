@@ -11,10 +11,10 @@ let dwytpl = (downloadDir, playlistId, parallelDownloadCount = 10, print) => {
             splitPrinter.titleLines = titleLines);
         tracker.summary.each(summaryLines =>
             splitPrinter.summaryLines = summaryLines);
-        tracker.progerss.each(progerssLines =>
-            splitPrinter.progerssLines = progerssLines);
-        tracker.messages.each(messagesLines =>
-            splitPrinter.messagesLines = messagesLines);
+        tracker.progerss.each(progressLines =>
+            splitPrinter.progressLines = progressLines);
+        tracker.messages.each(messageLines =>
+            splitPrinter.messageLines = messageLines);
     }
 
     return tracker;

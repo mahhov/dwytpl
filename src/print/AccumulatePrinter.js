@@ -1,28 +1,33 @@
-const printer = require('./printer');
-
 class AccumulatePrinter {
     constructor() {
-        this.titleLines = [];
-        this.progressLines = [];
-        this.removedProgressLines = [];
-        this.messageLines = [];
+        this.titleLines_ = [];
+        this.summaryLines_ = [];
+        this.progressLines_ = [];
+        this.messageLines_ = [];
     }
 
-    setTitleLine(index, line) {
-        this.titleLines[index] = line;
+    set titleLines(value) {
+        this.titleLines_ = value;
+        this.onChange_();
     }
 
-    setProgressLine(index, line) {
-        this.progressLines[index] = line;
+    set summaryLines(value) {
+        this.summaryLines_ = value;
+        this.onChange_();
     }
 
-    removeProgressLine(index) {
-        this.removedProgressLines.push(index);
-        this.addMessageLine_(this.progressLines[index]);
+    set progressLines(value) {
+        this.progressLines_ = value;
+        this.onChange_();
     }
 
-    addMessageLine_(line) {
-        this.messageLines.push(line);
+    set messageLines(value) {
+        this.messageLines_ = value;
+        this.onChange_();
+    }
+
+    onChange_() {
+        // abstract
     }
 }
 

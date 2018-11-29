@@ -1,21 +1,18 @@
 const Summary = require('./Summary');
 const FileWalker = require('file-walk-stream');
 const Playlist = require('./Playlist');
+const ProgressTracker = require('./ProgressTracker');
 
-let synch = async (downloadDir, playlistId, printer, parallelDownloadCount) => {
+let synch = async (downloadDir, playlistId, parallelDownloadCount) => {
+    let progressTracker = new ProgressTracker();
+
     let summary = new Summary();
-    summary.stream.each(([line1, line2]) => {
-        printer.setTitleLine(1, line1);
-        printer.setTitleLine(2, line2);
-    });
 
     let files = FileWalker.walk(downloadDir);
 
     let playlist = new Playlist(playlistId);
-    playlist.getOverview().then(({title, length}) => {
-        printer.setTitleLine(0, `${title} [${length}]`);
-        summary.setTotal(length);
-    });
+    playlist.getOverview().then(({length}) =>
+        summary.setTotal(length));
     let videos = playlist.getVideos();
 
     await files.complete;
@@ -32,13 +29,22 @@ let synch = async (downloadDir, playlistId, printer, parallelDownloadCount) => {
     toDownload.stream
         .map(video => video.download(downloadDir))
         .set('index', (_, i) => i)
-        .each(({stream, index}) => stream.each(text => printer.setProgressLine(index, text)))
+        .each(({stream, index}) => stream.each(text => progressTracker.setProgressLine(index, text)))
         .waitOn('promise')
         .each(toDownload.nextOne)
         .filterEach(status => status.promise && status.promise.isRejected,
             () => summary.incrementFailed(),
             () => summary.incrementDownloaded())
-        .each(({index}) => printer.removeProgressLine(index))
+        .each(({index}) => progressTracker.removeProgressLine(index));
+
+    return {
+        title: $tream()
+            .writePromise(playlist.getOverview())
+            .map(({title, length}) => [`${title} [${length}]`]),
+        summary: summary.stream,
+        progerss: progressTracker.progressStream,
+        messages: progressTracker.messageStream,
+    }
 };
 
 module.exports = {synch};

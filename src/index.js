@@ -5,7 +5,7 @@ let dwytpl = (downloadDir, playlistId, parallelDownloadCount = 10, print) => {
     let tracker = synch(downloadDir, playlistId, parallelDownloadCount);
 
     if (print) {
-        let splitPrinter = new SplitPrinter(3, parallelDownloadCount, 30);
+        let splitPrinter = new SplitPrinter(1, 2, parallelDownloadCount, 30);
 
         tracker.title.each(titleLines =>
             splitPrinter.titleLines = titleLines);

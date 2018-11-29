@@ -5,8 +5,8 @@ const MemoryWriteStream = require('./MemoryWriteStream');
 // todo doing this in sync slows us down? (exists, mkdir, copyfile)
 prepareDir = downloadDir => fs.existsSync(downloadDir) || fs.mkdirSync(downloadDir);
 
-downloadStream = (downloadDir, stream, name) => {
-	let status = new VideoStatus(name);
+downloadStream = (downloadDir, stream, statusName, fileName) => {
+	let status = new VideoStatus(statusName);
 
 	try {
 		let writeStream = new MemoryWriteStream();
@@ -20,7 +20,7 @@ downloadStream = (downloadDir, stream, name) => {
 			status.onProgress(downloadedSize, totalSize));
 
 		stream.on('end', () =>
-			writeStream.writeToFile(`${downloadDir}/${name}.webm`, () => status.onSuccess()));
+			writeStream.writeToFile(`${downloadDir}/${fileName}.webm`, () => status.onSuccess()));
 
 	} catch (error) {
 		status.onFail(error);

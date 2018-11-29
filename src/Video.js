@@ -10,7 +10,7 @@ class Video {
 
     download(downloadDir) {
         download.prepareDir(downloadDir);
-        return download.downloadStream(downloadDir, this.getStream_(), this.getName_());
+        return download.downloadStream(downloadDir, this.getStream_(), this.getName_(), this.getFileName_());
     }
 
     getStream_() {
@@ -18,12 +18,16 @@ class Video {
     }
 
     getName_() {
-        let numberString = this.number_.toString().padStart(5, 0);
-        return `${numberString}-${this.id_}-${this.title_}`;
+        let numberString = this.number_.toString().padStart(4, 0);
+        return `${numberString} ${this.getFileName_()}`;
     }
 
-    isSame(name) {
-        return name.includes(`-${this.id_}-${this.title_}.`);
+    getFileName_() {
+        return `${this.title_}#${this.id_}`;
+    }
+
+    isSame(fileName) {
+        return fileName === this.getFileName_();
     }
 
     static cleanTitle_(title) {

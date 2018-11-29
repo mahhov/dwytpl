@@ -48,6 +48,8 @@ todo: sample printer output
 }
 ```
 
+all 4 of the fields of the return object are streams of arrays of strings. For detailed information about streams, see [this npm package](https://www.npmjs.com/package/bs-better-stream). For a concrete example of using the return value, see [the below section](#example-using-return-value).
+
 #### `title`
 
 `title` stream values will be of the format 
@@ -82,14 +84,6 @@ todo: sample printer output
     ...
 ] 
 ```
-
-```
-['waiting to start' | 'started' | '<percent> (<time> remaining) [<size>]' | 'done downloading (<time>)' | 'failed to download', ...]
-```
-
-#### `messages`
-
-`messages` stream values will be of the format
 
 ## example using return value
 

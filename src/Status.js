@@ -1,5 +1,5 @@
-const PromiseCreator = require('./PromiseCreator');
 const $tream = require('bs-better-stream');
+const PromiseCreator = require('./PromiseCreator');
 
 class Status {
     constructor() {

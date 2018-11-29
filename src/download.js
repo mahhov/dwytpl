@@ -20,7 +20,7 @@ downloadStream = (downloadDir, stream, statusName, fileName) => {
 			status.onProgress(downloadedSize, totalSize));
 
 		stream.on('end', () =>
-			writeStream.writeToFile(`${downloadDir}/${fileName}.webm`, () => status.onSuccess()));
+			writeStream.writeToFile(`${downloadDir}/${fileName}`, () => status.onSuccess()));
 
 	} catch (error) {
 		status.onFail(error);

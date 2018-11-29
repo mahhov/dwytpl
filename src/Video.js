@@ -23,7 +23,7 @@ class Video {
     }
 
     getFileName_() {
-        return `${this.title_}#${this.id_}`;
+        return `${this.title_}#${this.id_}.webm`;
     }
 
     isSame(fileName) {

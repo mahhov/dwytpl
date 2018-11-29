@@ -37,14 +37,64 @@ boolean indicating whether the results should be printed to standard output.
 todo: sample printer output
 ```
 
-### return value `Printer`
+### return value
 
-`String[] Printer.titleLines`
+```
+{
+    stream<String[]> title,
+    stream<String[]> summary,
+    stream<String[]> progerss,
+    stream<String[]> messages,
+}
+```
 
-`String[] Printer.progressLines`
+#### `title`
 
-`String[] Printer.removedProgressLines`
+`title` stream values will be of the format 
 
-`String[] Printer.messageLines`
+```
+['<playlist title> [<playlist length>]']
+```
 
-todo: explain data contained in the above Printer fields
+#### `summary`
+
+`summary` stream values will be of the format
+ 
+ ```
+ [
+    'skipped <skipped count>. downloaded <downloaded count>. failed <failed count>. remaining <remaining count>. total <total count>',
+    '<percent> (<time estimate> remaining)'
+ ]
+ ```
+
+#### `progress` & `messages`
+
+`progress` and `message` streams values will be of the format
+
+```
+[
+    '<number>-<video id>-<video title>' +
+    'waiting to start' |
+    'started' |
+    '<percent> (<time> remaining) [<size>]' |
+    'done downloading (<time>)' |
+    'failed to download',
+    ...
+] 
+```
+
+```
+['waiting to start' | 'started' | '<percent> (<time> remaining) [<size>]' | 'done downloading (<time>)' | 'failed to download', ...]
+```
+
+#### `messages`
+
+`messages` stream values will be of the format
+
+## example using return value
+
+```js
+let tracker = dwytpl(path, playlistId);
+
+tracker.summary
+```

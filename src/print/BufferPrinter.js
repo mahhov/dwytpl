@@ -7,10 +7,10 @@ class BufferPrinter {
 
     line(index, line) {
         this.lines_[index] = line;
-        this.print();
+        this.print_();
     }
 
-    print() {
+    print_() {
         printer.clear();
         this.lines_.forEach((line, index) => printer.line(index, line));
     }

@@ -14,10 +14,8 @@ class SplitPrinter extends AccumulatePrinter {
         this.titleLines_.forEach((line, i) =>
             printer.line(i, line));
 
-        for (let i = 0, j = 0; i < this.progressSize_; i++, j++) {
-            while (this.removedProgressLines_.includes(j))
-                j++;
-            if (j < this.progressLines_.length)
+        for (let i = 0; i < this.progressSize_; i++) {
+            if (i < this.progressLines_.length)
                 printer.line(i + this.titleSize_ + 1, this.progressLines_[i]);
             else
                 printer.line(i + this.titleSize_ + 1, '');

@@ -109,7 +109,23 @@ all 4 of the fields of the return object are streams of arrays of strings. For d
 ## example using return value
 
 ```js
-let tracker = dwytpl(path, playlistId);
+const path = require('path');
+const dwytpl = require('dwytpl');
 
-tracker.summary
+let tracker = dwytpl(path.resolve(__dirname, 'downloads'), 'OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw', 10);
+
+tracker.title.each(([title]) =>
+    console.log('new title:', title));
+tracker.summary.each(lines => {
+    console.log('new summary:');
+    lines.forEach(line => console.log(line));
+});
+tracker.progerss.each(lines => {
+    console.log('new progerss:');
+    lines.forEach(line => console.log(line));
+});
+tracker.messages.each(lines => {
+    console.log('new messages:');
+    lines.forEach(line => console.log(line));
+});
 ```

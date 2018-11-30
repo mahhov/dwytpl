@@ -15,9 +15,9 @@ dwytpl(path, playlistId);
 
 ## api
 
-`Printer dwytp(string downloadDir, string playlistId, int parallelDownloadCount = 10, boolean print = false)`
+`Tracker dwytp(string downloadDir, string playlistId, int parallelDownloadCount = 10, boolean print = false)`
 
-###`downloadDir` 
+### `downloadDir` 
 
 target directory to save downloaded videos to. Interrupted or incomplete video downloads will not be saved. Videos already found in this directory will not be downloaded again. 
 
@@ -58,7 +58,7 @@ skipped 0. downloaded 7. failed 0. remaining 58. total 65
 0008 Gaspard_de_la_nuit_I_Ondine#c0y8JfJsK8o      done downloading (162.20 seconds)
 ```
 
-### return value
+### return value `Tracker`
 
 ```
 {

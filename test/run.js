@@ -2,7 +2,11 @@ const path = require('path');
 const dwytpl = require('../src/index');
 
 let playlist = new dwytpl.Playlist('OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw');
-let tracker = dwytpl(path.resolve(__dirname, '../downloads'), playlist, 10);
+let syncher = new dwytpl.Syncher(playlist);
+let tracker = syncher.tracker;
+let downloadDir = path.resolve(__dirname, '../downloads');
+
+syncher.download(downloadDir);
 
 let splitPrinter = new dwytpl.SplitPrinter(1, 2, 10, 30);
 

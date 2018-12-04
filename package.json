@@ -4,7 +4,9 @@
   "description": "download youtube playlists",
   "main": "src/index",
   "scripts": {
-    "test": "node test/run"
+    "test": "node test/run",
+    "test-tracker": "node test/tracker",
+    "test-playlist": "node test/playlist"
   },
   "keywords": [],
   "author": "mahhov",
@@ -14,9 +16,6 @@
     "bs-better-stream": "^1.8.5",
     "file-walk-stream": "^2.1.0",
     "ytdl-core": "^0.25.2"
-  },
-  "directories": {
-    "test": "test"
   },
   "devDependencies": {},
   "repository": {

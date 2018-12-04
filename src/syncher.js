@@ -1,17 +1,16 @@
 const $tream = require('bs-better-stream');
 const Summary = require('./Summary');
 const FileWalker = require('file-walk-stream');
-const Playlist = require('./Playlist');
 const ProgressTracker = require('./ProgressTracker');
 
-let synch = (downloadDir, playlistId, parallelDownloadCount) => {
+// todo move to playlist instance method
+let synch = (downloadDir, playlist, parallelDownloadCount) => {
     let progressTracker = new ProgressTracker();
 
     let summary = new Summary();
 
     let files = FileWalker.walk(downloadDir);
 
-    let playlist = new Playlist(playlistId);
     playlist.getOverview().then(({length}) =>
         summary.setTotal(length));
     let videos = playlist.getVideos();

@@ -22,22 +22,32 @@ class Syncher {
         this.videos_ = playlist.getVideos();
     }
 
-    async download(downloadDir, parallelDownloadCount = 10) {
-        let files = FileWalker.walk(downloadDir);
+    async setDownloadDir(downloadDir) {
+        this.downloadDir_ = downloadDir;
+        this.files_ = FileWalker.walk(downloadDir);
 
-        await files.complete;
+        this.downloaded_ = this.videos_
+            .if(video => video.downloaded);
+
+        await this.files_.complete;
+
+        this.videos_.productX(this.files_, (video, {file}) => video.isSame(file), video => video.downloaded = true);
+        this.downloaded_ = this.videos_.if(video => video.downloaded);
+
+        this.downloaded_.then.each(() => this.summary_.incrementPredownloaded());
+    }
+
+    async download(parallelDownloadCount = 10) {
+        if (!this.downloadDir_)
+            throw 'invoke .setDownloadDir_(string downloadDir) before invoking .synch(int parallelDownloadCount = 10)';
+
+        await this.files_.complete;
 
         this.summary_.onStart();
 
-        this.videos_.productX(files, (video, {file}) => video.isSame(file), video => video.downloaded = true);
-        let downloaded = this.videos_
-            .if(video => video.downloaded);
-
-        downloaded.then.each(() => this.summary_.incrementPredownloaded());
-
-        let toDownload = downloaded.else.throttle(parallelDownloadCount);
+        let toDownload = this.downloaded_.else.throttle(parallelDownloadCount);
         toDownload.stream
-            .map(video => video.download(downloadDir))
+            .map(video => video.download(this.downloadDir_))
             .set('index', (_, i) => i)
             .each(({stream, index}) => stream.each(text => this.progressTracker_.setProgressLine(index, text)))
             .waitOn('promise')

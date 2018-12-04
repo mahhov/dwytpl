@@ -6,7 +6,8 @@ let syncher = new dwytpl.Syncher(playlist);
 let tracker = syncher.tracker;
 let downloadDir = path.resolve(__dirname, '../downloads');
 
-syncher.download(downloadDir);
+syncher.setDownloadDir(downloadDir);
+syncher.download();
 
 let splitPrinter = new dwytpl.SplitPrinter(1, 2, 10, 30);
 

@@ -43,13 +43,13 @@ class Playlist {
     getOverview_() {
         return this.overviewCache_ = this.overviewCache_ ||
             axios.get(`${apiUrl}/playlists?part=snippet,contentDetails&id=${this.id_}&key=${apiKey}`)
-                .then(response => response.data)
+                .then(response => response.data);
     }
 
     getPage_(page = '') {
         return this.pageCache_[page] = this.pageCache_[page] ||
             axios.get(`${apiUrl}/playlistItems?part=snippet&maxResults=50&pageToken=${page}&playlistId=${this.id_}&key=${apiKey}`)
-                .then(response => response.data)
+                .then(response => response.data);
     }
 }
 

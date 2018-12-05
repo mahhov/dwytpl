@@ -19,7 +19,7 @@ syncher.download();
 
 ## public api
 
-#### Playlist
+### Playlist
 
 ##### `new Playlist(string playlistId)`
 
@@ -27,13 +27,13 @@ syncher.download();
 
 ##### `Stream<Video> Playlist.getVideos()`
 
-#### Video
+### Video
 
 ##### `void Video.download(string path)`
 
 ##### `boolean Video.isSame(string fileName)`
 
-#### Syncher
+### Syncher
 
 ##### `new Syncher(Playlist playlist)`
 
@@ -43,7 +43,7 @@ syncher.download();
 
 ##### `Tracker Syncher.tracker`
 
-#### Tracker
+### Tracker
 
 ##### `Stream<string[]> Tracker.title`
 
@@ -84,7 +84,7 @@ streams values will be of the format
 
 stream values will be of the same format as `Tracker.progress`'s stream values
 
-##### example using Tracker
+#### example using Tracker
 
 ```js
 const path = require('path');
@@ -114,7 +114,7 @@ tracker.messages.each(lines => {
 });
 ```
 
-#### SplitPrinter
+### SplitPrinter
 
 `SplitPrinter` is an in-place console printer.
 
@@ -128,7 +128,7 @@ tracker.messages.each(lines => {
 
 ##### `set messageLines(string[])`
 
-##### example using SplitPrinter
+#### example using SplitPrinter
 
 ```js
 const path = require('path');
@@ -148,7 +148,7 @@ tracker.messages.each(messageLines =>
     splitPrinter.messageLines = messageLines);
 ```
 
-### SplitPrinter output
+#### SplitPrinter output
 ```
 Classical Music Playlist [65]
 skipped 0. downloaded 7. failed 0. remaining 58. total 65

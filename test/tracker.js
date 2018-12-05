@@ -7,6 +7,7 @@ let tracker = syncher.tracker;
 let downloadDir = path.resolve(__dirname, '../downloads');
 
 syncher.setDownloadDir(downloadDir);
+sumcher.download();
 
 tracker.title.each(([title]) =>
     console.log('new title:', title));

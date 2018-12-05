@@ -10,49 +10,52 @@ const dwytpl = require('dwytpl');
 const path = '~\my-playlist-downloads';
 const playlistId = 'OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw';
 
-dwytpl(path, playlistId);
+let playlist = new dwytpl.Playlist(playlistId);
+let syncher = new dwytpl.Syncher(playlist);
+
+syncher.setDownloadDir(path);
+syncher.download();
 ```
 
-## api
+## public api
 
-`Tracker dwytp(string downloadDir, string playlistId, int parallelDownloadCount = 10, boolean print = false)`
+#### Playlist
 
-### `downloadDir` 
+##### `new Playlist(string playlistId)`
 
-target directory to save downloaded videos to. Interrupted or incomplete video downloads will not be saved. Videos already found in this directory will not be downloaded again. 
+##### `Promise<{string title, int length}> Playlist.getOverview()`
 
-### `playlistId`
+##### `Stream<Video> Playlist.getVideos()`
 
-youtube playlist id
+#### Video
 
-### `parallelDownloadCount`
+##### `void Video.download(string path)`
 
-number of concurrent video downloads. Defaults to 10.
+##### `boolean Video.isSame(string fileName)`
 
-### return value `Tracker`
+#### Syncher
 
-```
-{
-    stream<String[]> title,
-    stream<String[]> summary,
-    stream<String[]> progerss,
-    stream<String[]> messages,
-}
-```
+##### `new Syncher(Playlist playlist)`
 
-all 4 of the fields of the return object are streams of arrays of strings. For detailed information about streams, see [this npm package](https://www.npmjs.com/package/bs-better-stream). For a concrete example of using the return value, see [the below section](#example-using-return-value).
+##### `void Syncher.setDownloadDir(string downloadDir)`
 
-#### `title`
+##### `void Syncher.download(int parallelDownloadCount = 10)`
 
-`title` stream values will be of the format 
+##### `Tracker Syncher.tracker`
+
+#### Tracker
+
+##### `Stream<string[]> Tracker.title`
+
+stream values will be of the format 
 
 ```
 ['<playlist title> [<playlist length>]']
 ```
 
-#### `summary`
+##### `Stream<string[]> Tracker.summary`
 
-`summary` stream values will be of the format
+stream values will be of the format
  
  ```
  [
@@ -61,9 +64,9 @@ all 4 of the fields of the return object are streams of arrays of strings. For d
  ]
  ```
 
-#### `progress` & `messages`
+##### `Stream<string[]> Tracker.progerss`
 
-`progress` and `message` streams values will be of the format
+streams values will be of the format
 
 ```
 [
@@ -77,13 +80,23 @@ all 4 of the fields of the return object are streams of arrays of strings. For d
 ] 
 ```
 
-## example using return value
+##### `Stream<string[]> Tracker.messages`
+
+stream values will be of the same format as `Tracker.progress`'s stream values
+
+##### example using Tracker
 
 ```js
 const path = require('path');
 const dwytpl = require('dwytpl');
 
-let tracker = dwytpl(path.resolve(__dirname, 'downloads'), 'OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw', 10);
+let playlist = new dwytpl.Playlist('OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw');
+let syncher = new dwytpl.Syncher(playlist);
+let tracker = syncher.tracker;
+let downloadDir = path.resolve(__dirname, '../downloads');
+
+syncher.setDownloadDir(downloadDir);
+sumcher.download();
 
 tracker.title.each(([title]) =>
     console.log('new title:', title));
@@ -101,24 +114,21 @@ tracker.messages.each(lines => {
 });
 ```
 
-## included Printer `SplitPrinter`
+#### SplitPrinter
 
 `SplitPrinter` is an in-place console printer.
 
-### api
+##### `new SplitPrinter(int titleLines, int summaryLines, int progressLines, int messageLines)`
 
-`new dwytp.SplitPrinter(int titleLines, int summaryLines, int progressLines, int messageLines)`
+##### `set titleLines(string[])`
 
-`set titleLines(string[])`
+##### `set summaryLines(string[])`
 
-`set summaryLines(string[])`
+##### `set progressLines(string[])`
 
-`set progressLines(string[])`
+##### `set messageLines(string[])`
 
-`set messageLines(string[])`
-
-
-### example
+##### example using SplitPrinter
 
 ```js
 const path = require('path');
@@ -138,7 +148,7 @@ tracker.messages.each(messageLines =>
     splitPrinter.messageLines = messageLines);
 ```
 
-### output
+### SplitPrinter output
 ```
 Classical Music Playlist [65]
 skipped 0. downloaded 7. failed 0. remaining 58. total 65
@@ -164,3 +174,6 @@ skipped 0. downloaded 7. failed 0. remaining 58. total 65
 0008 Gaspard_de_la_nuit_I_Ondine#c0y8JfJsK8o      done downloading (162.20 seconds)
 ```
 
+## note on Stream's
+
+this module and its api uses `Stream`s extensively. For detailed information about streams, see the [bs-better-stream npm package](https://www.npmjs.com/package/bs-better-stream).

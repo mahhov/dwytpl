@@ -22,24 +22,22 @@ class Syncher {
         this.videos_ = playlist.getVideos();
     }
 
-    async setDownloadDir(downloadDir) {
+    async setDownloadDir(downloadDir = this.downloadDir_) {
         this.downloadDir_ = downloadDir;
         this.files_ = FileWalker.walk(downloadDir);
-
-        this.downloaded_ = this.videos_
-            .if(video => video.downloaded);
 
         await this.files_.complete;
 
         this.videos_.productX(this.files_, (video, {file}) => video.isSame(file), video => video.downloaded = true);
         this.downloaded_ = this.videos_.if(video => video.downloaded);
-
         this.downloaded_.then.each(() => this.summary_.incrementPredownloaded());
     }
 
     async download(parallelDownloadCount = 10) {
         if (!this.downloadDir_)
             throw 'invoke .setDownloadDir_(string downloadDir) before invoking .synch(int parallelDownloadCount = 10)';
+        else if (!this.downloaded_)
+            await this.setDownloadDir();
 
         await this.files_.complete;
 
@@ -56,6 +54,11 @@ class Syncher {
                 () => this.summary_.incrementFailed(),
                 () => this.summary_.incrementDownloaded())
             .each(({index}) => this.progressTracker_.removeProgressLine(index));
+    }
+
+    stopDownload() {
+        this.downloaded_.else.disconnect();
+        this.downloaded_ = null;
     }
 }
 

@@ -41,6 +41,8 @@ syncher.download();
 
 ##### `void Syncher.download(int parallelDownloadCount = 10)`
 
+#### `void Syncher.stopDownload()`
+
 ##### `Tracker Syncher.tracker`
 
 ### Tracker

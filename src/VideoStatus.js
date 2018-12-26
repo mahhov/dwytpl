@@ -4,7 +4,7 @@ class VideoStatus extends Status {
     constructor(prefix) {
         super();
         this.prefix_ = prefix;
-        super.onInitialization_();
+        this.onInitialization_();
     }
 
     setStatus_(status) {

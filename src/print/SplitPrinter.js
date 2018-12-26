@@ -21,12 +21,11 @@ class SplitPrinter extends AccumulatePrinter {
             printer.line(i + offset, line));
 
         offset += this.summarySize_ + 1;
-        for (let i = 0; i < this.progressSize_; i++) {
+        for (let i = 0; i < this.progressSize_; i++)
             if (i < this.progressLines_.length)
                 printer.line(i + offset, this.progressLines_[i]);
             else
                 printer.line(i + offset, '');
-        }
 
         offset += this.progressSize_ + 1;
         let firstMessageIndex = Math.max(0, this.messageLines_.length - this.messageSize_);

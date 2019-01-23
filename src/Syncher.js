@@ -36,8 +36,6 @@ class Syncher {
     async download(parallelDownloadCount = 10) {
         if (!this.downloadDir_)
             throw 'invoke .setDownloadDir_(string downloadDir) before invoking .synch(int parallelDownloadCount = 10)';
-        else if (!this.downloaded_)
-            await this.setDownloadDir();
 
         await this.files_.complete;
 
@@ -58,7 +56,7 @@ class Syncher {
 
     stopDownload() {
         this.downloaded_.else.disconnect();
-        this.downloaded_ = null;
+        this.setDownloadDir();
     }
 }
 

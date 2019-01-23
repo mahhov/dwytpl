@@ -2,7 +2,7 @@ const Status = require('./Status');
 
 class SummaryStatus extends Status {
     startStatus_() {
-        return ['fetching', '...'];
+        return ['', ''];
     }
 
     progressStatus_(percent, time, size, total, predownloaded, downloaded, failed) {

@@ -46,6 +46,7 @@ class Summary {
 
     onStart() {
         this.status_.onStart();
+        this.updateSummary_();
     }
 }
 

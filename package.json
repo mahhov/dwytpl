@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node test/run",
     "test-tracker": "node test/tracker",
-    "test-playlist": "node test/playlist"
+    "test-playlist": "node test/playlist",
+    "test-download": "node test/downloadTest"
   },
   "keywords": [],
   "author": "mahhov",
@@ -15,7 +16,7 @@
     "axios": "^0.18.0",
     "bs-better-stream": "^1.9.0",
     "file-walk-stream": "^2.1.0",
-    "ytdl-core": "^0.25.2"
+    "ytdl-core": "^0.29.1"
   },
   "devDependencies": {},
   "repository": {

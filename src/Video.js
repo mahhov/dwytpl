@@ -14,7 +14,7 @@ class Video {
     }
 
     getStream_() {
-        return this.streamCache_ = this.streamCache_ || ytdl(this.id_, {quality: 'lowest'});
+        return this.streamCache_ = this.streamCache_ || ytdl(this.id_, {quality: 'highestaudio'});
     }
 
     getName_() {

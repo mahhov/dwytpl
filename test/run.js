@@ -1,7 +1,7 @@
 const path = require('path');
 const dwytpl = require('../src/index');
 
-let playlist = new dwytpl.Playlist('OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw');
+let playlist = new dwytpl.Playlist('PLameShrvoeYe8zDrjPzMPe6PKkRxXJqAm');
 let syncher = new dwytpl.Syncher(playlist);
 let tracker = syncher.tracker;
 let downloadDir = path.resolve(__dirname, '../downloads');

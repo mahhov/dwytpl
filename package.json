@@ -1,6 +1,6 @@
 {
   "name": "dwytpl",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "download youtube playlists",
   "main": "src/index",
   "scripts": {
@@ -16,7 +16,7 @@
     "axios": "^0.18.0",
     "bs-better-stream": "^1.9.0",
     "file-walk-stream": "^2.1.0",
-    "ytdl-core": "^0.29.1"
+    "ytdl-core": "^0.29.2"
   },
   "devDependencies": {},
   "repository": {

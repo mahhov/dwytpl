@@ -5,7 +5,7 @@ const MemoryWriteStream = require('../src/MemoryWriteStream');
 
 download.prepareDir('temp');
 
-const id = 'sJXZ9Dok7u8';
+const id = 'sJXZ9Dok7u8'; // HWyEEj2pSt0 403
 const stream = ytdl(id, {quality: 'highestaudio'});
 // const stream = ytdl(id, {filter: (format) => console.log(format)});
 
@@ -17,3 +17,7 @@ stream.on('progress', (chunkLength, downloadedSize, totalSize) =>
     console.log('progress', downloadedSize, '/', totalSize));
 stream.on('end', () =>
     writeStream.writeToFile('temp/songDefault.webm', () => console.log('end')));
+
+
+// ytdl('http://www.youtube.com/watch?v=HWyEEj2pSt0')
+// 	.pipe(fs.createWriteStream('video.flv'));

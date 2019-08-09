@@ -27,8 +27,7 @@ class Video {
     }
 
     isSame(fileName) {
-        let idMatch = fileName.match(/-([^-]+).webm$/);
-        return idMatch ? idMatch[1] === this.id_ : fileName === this.getFileName_();
+        return fileName.match(/-([^.]*)./)[1] === this.id_;
     }
 
     static cleanTitle_(title) {

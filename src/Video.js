@@ -2,7 +2,7 @@ const ytdl = require('ytdl-core');
 const download = require('./download');
 
 class Video {
-    constructor(number, id, title, thumbnail) {
+    constructor(number, id, title) {
         this.number_ = number;
         this.id_ = id;
         this.title_ = Video.cleanTitle_(title);

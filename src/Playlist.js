@@ -1,8 +1,6 @@
-const axios = require('axios');
 const $tream = require('bs-better-stream');
 const Video = require('./Video');
-const apiUrl = 'https://www.googleapis.com/youtube/v3';
-const apiKey = 'AIzaSyAdkXuGc2f7xJg5FLTWBi2cRUhzAJD-eC0';
+const youtube = require('./youtube');
 
 class Playlist {
     constructor(id) {
@@ -41,15 +39,11 @@ class Playlist {
     }
 
     getOverview_() {
-        return this.overviewCache_ = this.overviewCache_ ||
-            axios.get(`${apiUrl}/playlists?part=snippet,contentDetails&id=${this.id_}&key=${apiKey}`)
-                .then(response => response.data);
+        return this.overviewCache_ = this.overviewCache_ || youtube.getPlaylistOverview(this.id_);
     }
 
     getPage_(page = '') {
-        return this.pageCache_[page] = this.pageCache_[page] ||
-            axios.get(`${apiUrl}/playlistItems?part=snippet&maxResults=50&pageToken=${page}&playlistId=${this.id_}&key=${apiKey}`)
-                .then(response => response.data);
+        return this.pageCache_[page] = this.pageCache_[page] || youtube.getPlaylistPage(this.id_, page);
     }
 }
 

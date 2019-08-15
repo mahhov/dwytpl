@@ -3,23 +3,33 @@ const Summary = require('./Summary');
 const FileWalker = require('file-walk-stream');
 const ProgressTracker = require('./ProgressTracker');
 
+class Synchable {
+    async getOverview() {
+        return {title: '', length: 0};
+    }
+
+    getVideos() {
+        return $tream();
+    }
+}
+
 class Syncher {
-    constructor(playlist) {
+    constructor(synchable) {
         this.progressTracker_ = new ProgressTracker();
         this.summary_ = new Summary();
         this.tracker = {
             title: $tream()
-                .writePromise(playlist.getOverview())
+                .writePromise(synchable.getOverview())
                 .map(({title, length}) => [`${title} [${length}]`]),
             summary: this.summary_.stream,
             progerss: this.progressTracker_.progressStream,
             messages: this.progressTracker_.messageStream,
         };
 
-        playlist.getOverview().then(({length}) =>
+        synchable.getOverview().then(({length}) =>
             this.summary_.setTotal(length));
 
-        this.videos_ = playlist.getVideos();
+        this.videos_ = synchable.getVideos();
     }
 
     async setDownloadDir(downloadDir = this.downloadDir_) {
@@ -59,5 +69,7 @@ class Syncher {
         this.setDownloadDir();
     }
 }
+
+Syncher.Synchable = Synchable;
 
 module.exports = Syncher;

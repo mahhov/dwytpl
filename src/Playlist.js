@@ -1,9 +1,11 @@
 const $tream = require('bs-better-stream');
+const Syncher = require('./Syncher');
 const Video = require('./Video');
 const youtube = require('./youtube');
 
-class Playlist {
+class Playlist extends Syncher.Synchable {
     constructor(id) {
+        super();
         this.id_ = id;
         this.pageCache_ = {};
     }

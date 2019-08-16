@@ -15,6 +15,7 @@ class Synchable {
 
 class Syncher {
     constructor(synchable) {
+        this.videos_ = synchable.getVideos();
         this.progressTracker_ = new ProgressTracker();
         this.summary_ = new Summary();
         this.tracker = {
@@ -24,12 +25,10 @@ class Syncher {
             summary: this.summary_.stream,
             progerss: this.progressTracker_.progressStream,
             messages: this.progressTracker_.messageStream,
+            videoStatuses: this.videos_.map(video => video.status),
         };
-
         synchable.getOverview().then(({length}) =>
             this.summary_.setTotal(length));
-
-        this.videos_ = synchable.getVideos();
     }
 
     async setDownloadDir(downloadDir = this.downloadDir_) {
@@ -38,9 +37,10 @@ class Syncher {
 
         await this.files_.complete;
 
-        this.videos_.productX(this.files_, (video, {file}) => video.isSame(file), video => video.downloaded = true);
-        this.downloaded_ = this.videos_.if(video => video.downloaded);
-        this.downloaded_.then.each(() => this.summary_.incrementPredownloaded());
+        this.videos_.productX(this.files_, (video, {file}) => video.isSame(file), video => video.setDownloaded());
+        this.videos_
+            .filter(video => video.isDownloaded())
+            .each(() => this.summary_.incrementPredownloaded());
     }
 
     async download(parallelDownloadCount = 10) {
@@ -51,21 +51,24 @@ class Syncher {
 
         this.summary_.onStart();
 
-        let toDownload = this.downloaded_.else.throttle(parallelDownloadCount);
+        let toDownload = this.videos_
+            .filter(video => !video.isDownloaded())
+            .throttle(parallelDownloadCount);
         toDownload.stream
-            .map(video => video.download(this.downloadDir_))
-            .set('index', (_, i) => i)
-            .each(({stream, index}) => stream.each(text => this.progressTracker_.setProgressLine(index, text)))
+            .each(video => video.download(this.downloadDir_))
+            .map(video => video.status)
+            .set('index_', (_, i) => i)
+            .each(({stream, index_}) => stream.each(text => this.progressTracker_.setProgressLine(index_, text)))
             .waitOn('promise')
             .each(toDownload.nextOne)
             .filterEach(status => status.promise && status.promise.isRejected,
                 () => this.summary_.incrementFailed(),
                 () => this.summary_.incrementDownloaded())
-            .each(({index}) => this.progressTracker_.removeProgressLine(index));
+            .each(({index_}) => this.progressTracker_.removeProgressLine(index_));
     }
 
     stopDownload() {
-        this.downloaded_.else.disconnect();
+        this.videos_.each(video => video.stopDownload());
         this.setDownloadDir();
     }
 }

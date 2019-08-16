@@ -1,16 +1,43 @@
 const ytdl = require('ytdl-core');
-const download = require('./download');
+const VideoStatus = require('./VideoStatus');
+const fs = require('fs');
+const MemoryWriteStream = require('./MemoryWriteStream');
 
 class Video {
     constructor(number, id, title) {
         this.number_ = number;
         this.id_ = id;
         this.title_ = Video.cleanTitle_(title);
+        this.status = new VideoStatus(this.getName_());
+    }
+
+    setDownloaded() {
+        this.downloaded_ = true;
+        this.status.onSuccess();
+    }
+
+    isDownloaded() {
+        return this.downloaded_;
     }
 
     download(downloadDir) {
-        download.prepareDir(downloadDir);
-        return download.downloadStream(downloadDir, this.getStream_(), this.getName_(), this.getFileName_());
+        // todo doing this in sync slows us down? (exists, mkdir, copyfile)
+        if (!fs.existsSync(downloadDir))
+            fs.mkdirSync(downloadDir);
+
+        let stream = this.getStream_();
+        try {
+            let writeStream = new MemoryWriteStream();
+            stream.pipe(writeStream);
+            stream.once('response', () => this.status.onStart());
+            stream.on('error', error => this.status.onFail(error));
+            stream.on('progress', (chunkLength, downloadedSize, totalSize) =>
+                this.status.onProgress(downloadedSize, totalSize));
+            stream.on('end', () =>
+                writeStream.writeToFile(`${downloadDir}/${this.getFileName_()}`, () => this.status.onSuccess()));
+        } catch (error) {
+            this.status.onFail(error);
+        }
     }
 
     stopDownload() {

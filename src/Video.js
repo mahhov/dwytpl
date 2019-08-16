@@ -13,6 +13,13 @@ class Video {
         return download.downloadStream(downloadDir, this.getStream_(), this.getName_(), this.getFileName_());
     }
 
+    stopDownload() {
+        if (!this.streamCache_)
+            return;
+        this.streamCache_.destroy();
+        this.streamCache_ = null;
+    }
+
     getStream_() {
         return this.streamCache_ = this.streamCache_ || ytdl(this.id_, {quality: 'highestaudio'});
     }

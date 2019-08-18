@@ -23,8 +23,6 @@ syncher.download();
 
 ##### `new Playlist(string playlistId)`
 
-##### `Stream<Video> getVideos()`
-
 ### Search
 
 ##### `new Search()`

@@ -25,7 +25,6 @@ class Syncher {
             summary: this.summary_.stream,
             progerss: this.progressTracker_.progressStream,
             messages: this.progressTracker_.messageStream,
-            videoStatuses: this.videos_.map(video => video.status),
         };
         synchable.getOverview().then(({length}) =>
             this.summary_.setTotal(length));

@@ -23,11 +23,15 @@ syncher.download();
 
 ##### `new Playlist(string playlistId)`
 
+##### `Stream<Video> getVideos()`
+
 ### Search
 
 ##### `new Search()`
 
 ##### `void query(string query)`
+
+##### `Stream<Video> getVideos()`
 
 #####  
 
@@ -36,6 +40,8 @@ syncher.download();
 ##### `void Video.download(string path)`
 
 ##### `boolean Video.isSame(string fileName)`
+
+##### `VideoStatus status`
 
 ### Syncher
 
@@ -89,8 +95,6 @@ streams values will be of the format
 ##### `Stream<string[]> Tracker.messages`
 
 stream values will be of the same format as `Tracker.progress`'s stream values
-
-##### `Stream<VideoStatus>` Tracker.videoStatuses
 
 ### VideoStatus
 

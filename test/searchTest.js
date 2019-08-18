@@ -26,7 +26,8 @@ let tracker = syncher.tracker;
 //     lines.forEach(line => console.log(line));
 // });
 
-tracker.videoStatuses
+search.getVideos()
+    .map(video => video.status)
     .each((videoStatus, i) => videoStatus.stream.each((value, j) =>
         console.log(
             i,

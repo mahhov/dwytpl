@@ -17,8 +17,8 @@ let tracker = syncher.tracker;
 //     console.log('new summary:');
 //     lines.forEach(line => console.log(line));
 // });
-// // tracker.progerss.each(lines => {
-// //     console.log('new progerss:');
+// // tracker.progress.each(lines => {
+// //     console.log('new progress:');
 // //     lines.forEach(line => console.log(line));
 // // });
 // tracker.messages.each(lines => {

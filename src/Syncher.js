@@ -23,7 +23,7 @@ class Syncher {
                 .writePromise(synchable.getOverview())
                 .map(({title, length}) => [`${title} [${length}]`]),
             summary: this.summary_.stream,
-            progerss: this.progressTracker_.progressStream,
+            progress: this.progressTracker_.progressStream,
             messages: this.progressTracker_.messageStream,
         };
         synchable.getOverview().then(({length}) =>

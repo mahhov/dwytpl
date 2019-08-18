@@ -76,7 +76,7 @@ stream values will be of the format
  ]
  ```
 
-##### `Stream<string[]> Tracker.progerss`
+##### `Stream<string[]> Tracker.progress`
 
 streams values will be of the format
 
@@ -128,8 +128,8 @@ tracker.summary.each(lines => {
     console.log('new summary:');
     lines.forEach(line => console.log(line));
 });
-tracker.progerss.each(lines => {
-    console.log('new progerss:');
+tracker.progress.each(lines => {
+    console.log('new progress:');
     lines.forEach(line => console.log(line));
 });
 tracker.messages.each(lines => {
@@ -166,7 +166,7 @@ tracker.title.each(titleLines =>
     splitPrinter.titleLines = titleLines);
 tracker.summary.each(summaryLines =>
     splitPrinter.summaryLines = summaryLines);
-tracker.progerss.each(progressLines =>
+tracker.progress.each(progressLines =>
     splitPrinter.progressLines = progressLines);
 tracker.messages.each(messageLines =>
     splitPrinter.messageLines = messageLines);

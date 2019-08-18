@@ -25,7 +25,7 @@ class Video {
             stream.on('progress', (chunkLength, downloadedSize, totalSize) =>
                 this.status.onProgress(downloadedSize, totalSize));
             stream.on('end', () =>
-                writeStream.writeToFile(`${downloadDir}/${this.getFileName_()}`, () => this.status.onSuccess(dir)));
+                writeStream.writeToFile(`${downloadDir}/${this.getFileName_()}`, () => this.status.onSuccess(downloadDir)));
         } catch (error) {
             this.status.onFail(error);
         }

@@ -37,9 +37,12 @@ class Syncher {
 
         await this.files_.complete;
 
-        this.videos_.productX(this.files_, (video, {file}) => video.isSame(file), video => video.setDownloaded());
         this.videos_
-            .filter(video => video.isDownloaded())
+            .productX(this.files_,
+                (video, {file}) => video.isSame(file),
+                video => video.status.onSuccess(downloadDir));
+        this.videos_
+            .filter(video => video.status.downloaded)
             .each(() => this.summary_.incrementPredownloaded());
     }
 
@@ -52,7 +55,7 @@ class Syncher {
         this.summary_.onStart();
 
         let toDownload = this.videos_
-            .filter(video => !video.isDownloaded())
+            .filter(video => !video.status.downloaded)
             .throttle(parallelDownloadCount);
         toDownload.stream
             .each(video => video.download(this.downloadDir_))

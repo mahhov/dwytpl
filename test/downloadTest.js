@@ -1,6 +1,6 @@
 const fs = require('fs');
 const ytdl = require('ytdl-core');
-const download = require('../src/download');
+// const download = require('../src/download');
 const MemoryWriteStream = require('../src/MemoryWriteStream');
 
 download.prepareDir('temp');

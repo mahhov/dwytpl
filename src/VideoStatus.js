@@ -14,6 +14,11 @@ class VideoStatus extends Status {
         super.setStatus_(status);
     }
 
+    onSuccess(downloadDir) {
+        this.downloadDir = downloadDir;
+        super.onSuccess();
+    }
+
     initializationStatus_() {
         return 'waiting to start';
     }

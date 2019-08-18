@@ -5,7 +5,18 @@ class Status {
     constructor() {
         this.stream = $tream();
         this.promiseWrap_ = new PromiseCreator();
-        this.promise = this.promiseWrap_.promise;
+    }
+
+    get promise() {
+        return this.promiseWrap_.promise;
+    }
+
+    get downloaded() {
+        return this.promiseWrap_.resolved;
+    }
+
+    get failed() {
+        return this.promiseWrap_.rejected;
     }
 
     setStatus_(status) {
@@ -22,7 +33,7 @@ class Status {
         this.startTime_ = Date.now();
     }
 
-    onProgress(downloadedSize, totalSize, ...additionalParamters) {
+    onProgress(downloadedSize, totalSize, ...additionalParameters) {
         let floatDownloaded = downloadedSize / totalSize;
         let secondsPassed = this.secondsPassed_;
         let estimatedTimeRemaining = secondsPassed / floatDownloaded - secondsPassed;
@@ -31,7 +42,7 @@ class Status {
         let size = Status.sizeFormat_(totalSize);
         let time = Status.timeFormat_(estimatedTimeRemaining);
 
-        this.setStatus_(this.progressStatus_(percent, time, size, ...additionalParamters));
+        this.setStatus_(this.progressStatus_(percent, time, size, ...additionalParameters));
     }
 
     onSuccess() {
@@ -46,7 +57,7 @@ class Status {
     }
 
     get secondsPassed_() {
-        return (Date.now() - this.startTime_) / 1000;
+        return (Date.now() - this.startTime_ || 0) / 1000;
     }
 
     static percentFormat_(percent) {

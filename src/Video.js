@@ -11,15 +11,6 @@ class Video {
         this.status = new VideoStatus(this.getName_());
     }
 
-    setDownloaded() {
-        this.downloaded_ = true;
-        this.status.onSuccess();
-    }
-
-    isDownloaded() {
-        return this.downloaded_;
-    }
-
     download(downloadDir) {
         // todo doing this in sync slows us down? (exists, mkdir, copyfile)
         if (!fs.existsSync(downloadDir))
@@ -34,7 +25,7 @@ class Video {
             stream.on('progress', (chunkLength, downloadedSize, totalSize) =>
                 this.status.onProgress(downloadedSize, totalSize));
             stream.on('end', () =>
-                writeStream.writeToFile(`${downloadDir}/${this.getFileName_()}`, () => this.status.onSuccess()));
+                writeStream.writeToFile(`${downloadDir}/${this.getFileName_()}`, () => this.status.onSuccess(dir)));
         } catch (error) {
             this.status.onFail(error);
         }

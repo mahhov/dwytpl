@@ -23,9 +23,13 @@ syncher.download();
 
 ##### `new Playlist(string playlistId)`
 
-##### `Promise<{string title, int length}> Playlist.getOverview()`
+### Search
 
-##### `Stream<Video> Playlist.getVideos()`
+##### `new Search()`
+
+##### `void query(string query)`
+
+#####  
 
 ### Video
 
@@ -35,13 +39,13 @@ syncher.download();
 
 ### Syncher
 
-##### `new Syncher(Playlist playlist)`
+##### `new Syncher(Playlist|Search synchable)`
 
 ##### `void Syncher.setDownloadDir(string downloadDir)`
 
 ##### `void Syncher.download(int parallelDownloadCount = 10)`
 
-#### `void Syncher.stopDownload()`
+##### `void Syncher.stopDownload()`
 
 ##### `Tracker Syncher.tracker`
 
@@ -85,6 +89,20 @@ streams values will be of the format
 ##### `Stream<string[]> Tracker.messages`
 
 stream values will be of the same format as `Tracker.progress`'s stream values
+
+##### `Stream<VideoStatus>` Tracker.videoStatuses
+
+### VideoStatus
+
+##### `Stream<string> stream`
+
+##### `Promise promise`
+
+##### `bool downloaded`
+
+##### `bool failed`
+
+##### `string downloadDir`
 
 #### example using Tracker
 

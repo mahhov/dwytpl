@@ -4,6 +4,7 @@ const FileWalker = require('file-walk-stream');
 const ProgressTracker = require('./ProgressTracker');
 
 class Synchable {
+    // todo deprecated
     async getOverview() {
         return {title: '', length: 0};
     }
@@ -26,8 +27,7 @@ class Syncher {
             progress: this.progressTracker_.progressStream,
             messages: this.progressTracker_.messageStream,
         };
-        synchable.getOverview().then(({length}) =>
-            this.summary_.setTotal(length));
+        synchable.getVideos().each((_, i) => this.summary_.setTotal(i + 1));
     }
 
     async setDownloadDir(downloadDir = this.downloadDir_) {

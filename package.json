@@ -17,7 +17,7 @@
     "axios": "^0.18.0",
     "bs-better-stream": "^1.9.0",
     "file-walk-stream": "^2.1.0",
-    "promise-w": "^1.0.1",
+    "promise-w": "^1.0.2",
     "ytdl-core": "^0.29.2"
   },
   "devDependencies": {},

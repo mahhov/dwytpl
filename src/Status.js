@@ -1,14 +1,14 @@
 const $tream = require('bs-better-stream');
-const PromiseCreator = require('./PromiseCreator');
+const PromiseW = require('PromiseW');
 
 class Status {
     constructor() {
         this.stream = $tream();
-        this.promiseWrap_ = new PromiseCreator();
+        this.promiseWrap_ = new PromiseW();
     }
 
     get promise() {
-        return this.promiseWrap_.promise;
+        return this.promiseWrap_;
     }
 
     get downloaded() {

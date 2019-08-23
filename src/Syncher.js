@@ -63,9 +63,9 @@ class Syncher {
             .each(({stream, index_}) => stream.each(text => this.progressTracker_.setProgressLine(index_, text)))
             .waitOn('promise')
             .each(toDownload.nextOne)
-            .filterEach(status => status.promise && status.promise.isRejected,
-                () => this.summary_.incrementFailed(),
-                () => this.summary_.incrementDownloaded())
+            .filterEach(status => status.downloaded,
+                () => this.summary_.incrementDownloaded(),
+                () => this.summary_.incrementFailed())
             .each(({index_}) => this.progressTracker_.removeProgressLine(index_));
     }
 

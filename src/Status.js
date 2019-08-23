@@ -1,5 +1,5 @@
 const $tream = require('bs-better-stream');
-const PromiseW = require('PromiseW');
+const PromiseW = require('promise-w');
 
 class Status {
     constructor() {

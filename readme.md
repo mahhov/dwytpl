@@ -23,6 +23,8 @@ syncher.download();
 
 ##### `new Playlist(string playlistId)`
 
+##### `bool includesVideo(string id)`
+
 ### Search
 
 ##### `new Search()`

@@ -8,17 +8,10 @@ class Playlist extends Syncher.Synchable {
         super();
         this.id_ = id;
         this.pageCache_ = {};
+        this.videos_ = this.initVideos_();
     }
 
-    async getOverview() {
-        let playlist = (await this.getOverview_()).items[0];
-        return playlist
-            ? {title: playlist.snippet.title, length: playlist.contentDetails.itemCount}
-            : {title: `no playlist with id ${this.id_}`, length: 0};
-
-    };
-
-    getVideos() {
+    initVideos_() {
         let pages = $tream();
         let responses = pages
             .map(this.getPage_.bind(this))
@@ -33,6 +26,13 @@ class Playlist extends Syncher.Synchable {
             .flatten()
             .pluck('snippet')
             .map(({resourceId: {videoId}, title}, i) => new Video(i, videoId, title));
+    }
+
+    async getOverview() {
+        let playlist = (await this.getOverview_()).items[0];
+        return playlist
+            ? {title: playlist.snippet.title, length: playlist.contentDetails.itemCount}
+            : {title: `no playlist with id ${this.id_}`, length: 0};
     }
 
     getOverview_() {

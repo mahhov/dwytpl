@@ -9,14 +9,14 @@ class Synchable {
         return {title: '', length: 0};
     }
 
-    getVideos() {
-        return $tream();
+    get videos() {
+        return this.videos_ || $tream();
     }
 }
 
 class Syncher {
     constructor(synchable) {
-        this.videos_ = synchable.getVideos();
+        this.videos_ = synchable.videos;
         this.progressTracker_ = new ProgressTracker();
         this.summary_ = new Summary();
         this.tracker = {
@@ -27,7 +27,7 @@ class Syncher {
             progress: this.progressTracker_.progressStream,
             messages: this.progressTracker_.messageStream,
         };
-        synchable.getVideos().each((_, i) => this.summary_.setTotal(i + 1));
+        this.videos_.each((_, i) => this.summary_.setTotal(i + 1));
     }
 
     async setDownloadDir(downloadDir, alternateDirs = [], moveFromAlternativeDirs = false) {

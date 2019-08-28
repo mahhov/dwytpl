@@ -20,10 +20,6 @@ class Search extends Syncher.Synchable {
         this.queries_.writePromise(this.getSearch_(query))
     }
 
-    getVideos() {
-        return this.videos_;
-    }
-
     getSearch_(query) {
         return this.searchCache_[query] = this.searchCache_[query] || youtube.getSearch(query);
     }

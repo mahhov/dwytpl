@@ -27,7 +27,7 @@ let tracker = syncher.tracker;
 //     lines.forEach(line => console.log(line));
 // });
 
-search.getVideos()
+search.videos
     .map(video => video.status)
     .each((videoStatus, i) => videoStatus.stream
         .filter((_, j) => j <= 1 || videoStatus.promise.done)

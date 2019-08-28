@@ -29,7 +29,7 @@ syncher.download();
 
 ##### `void query(string query)`
 
-##### `Stream<Video> getVideos()`
+##### `Stream<Video> videos`
 
 #####  
 

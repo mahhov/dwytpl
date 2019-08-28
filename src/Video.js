@@ -31,6 +31,15 @@ class Video {
         }
     }
 
+    move(path) {
+        if (this.status.downloadDirs.includes(path))
+            return;
+        let fileName = this.getFileName_();
+        return fs.promises.rename(
+            `${this.status.downloadDirs[0]}/${fileName}`,
+            `${path}/${fileName}`);
+    }
+
     stopDownload() {
         if (!this.streamCache_)
             return;
@@ -42,12 +51,12 @@ class Video {
         return this.streamCache_ = this.streamCache_ || ytdl(this.id_, {quality: 'highestaudio'});
     }
 
-    getName_() {
+    getName_() { // todo make public
         let numberString = this.number_.toString().padStart(4, 0);
         return `${numberString} ${this.getFileName_()}`;
     }
 
-    getFileName_() {
+    getFileName_() { // todo make public
         return `${this.title_}-${this.id_}.webm`;
     }
 

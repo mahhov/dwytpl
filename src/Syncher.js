@@ -30,26 +30,36 @@ class Syncher {
         synchable.getVideos().each((_, i) => this.summary_.setTotal(i + 1));
     }
 
-    async setDownloadDir(downloadDir = this.downloadDir_) {
+    async setDownloadDir(downloadDir, alternateDirs = [], moveFromAlternativeDirs = false) {
         this.downloadDir_ = downloadDir;
-        this.files_ = FileWalker.walk(downloadDir);
+        this.dirs_ = $tream().write(downloadDir, ...alternateDirs);
+        this.moveFromAlternativeDirs_ = moveFromAlternativeDirs;
+        return this.recheckDirsPromise_ = this.recheckDirs_();
+    }
 
-        await this.files_.complete;
+    async recheckDirs_() {
+        let walks = this.dirs_
+            .map(dir => FileWalker.walk(dir));
+        await walks.map(walk => walk.complete).promise;
+        this.files_ = walks
+            .flatMap(walk => walk.outValues);
 
         this.videos_
             .productX(this.files_,
                 (video, {file}) => video.isSame(file),
-                video => video.status.onSuccess(downloadDir));
+                (video, {dir}) => video.status.onSuccess(dir));
         this.videos_
             .filter(video => video.status.downloaded)
-            .each(() => this.summary_.incrementPredownloaded());
+            .each(() => this.summary_.incrementPredownloaded())
+            .filter(() => this.moveFromAlternativeDirs_)
+            .each(video => video.move(this.downloadDir_));
     }
 
     async download(parallelDownloadCount = 10) {
         if (!this.downloadDir_)
             throw 'invoke .setDownloadDir_(string downloadDir) before invoking .synch(int parallelDownloadCount = 10)';
 
-        await this.files_.complete;
+        await this.recheckDirsPromise_;
 
         this.summary_.onStart();
 
@@ -71,7 +81,7 @@ class Syncher {
 
     stopDownload() {
         this.videos_.each(video => video.stopDownload());
-        this.setDownloadDir();
+        return this.recheckDirs_();
     }
 }
 

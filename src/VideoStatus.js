@@ -4,6 +4,7 @@ class VideoStatus extends Status {
     constructor(prefix) {
         super();
         this.prefix_ = prefix;
+        this.downloadDirs = [];
         this.onInitialization_();
     }
 
@@ -15,7 +16,7 @@ class VideoStatus extends Status {
     }
 
     onSuccess(downloadDir) {
-        this.downloadDir = downloadDir;
+        this.downloadDirs.push(downloadDir);
         super.onSuccess();
     }
 

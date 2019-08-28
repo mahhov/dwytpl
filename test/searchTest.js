@@ -1,11 +1,12 @@
 const path = require('path');
 const dwytpl = require('../src/index');
 let downloadDir = path.resolve(__dirname, '../downloads');
+let downloadDir2 = path.resolve(__dirname, '../downloads2');
 
 let search = new dwytpl.Search();
 search.query('jon bovi');
 let syncher = new dwytpl.Syncher(search);
-syncher.setDownloadDir(downloadDir);
+syncher.setDownloadDir(downloadDir2, [downloadDir], true);
 // search.query('hardwell');
 syncher.download();
 
@@ -28,12 +29,13 @@ let tracker = syncher.tracker;
 
 search.getVideos()
     .map(video => video.status)
-    .each((videoStatus, i) => videoStatus.stream.each((value, j) =>
-        console.log(
-            i,
-            j,
-            value,
-            videoStatus.downloaded,
-            videoStatus.failed,
-            videoStatus.promise,
-            videoStatus.downloadDir)));
+    .each((videoStatus, i) => videoStatus.stream
+        .filter((_, j) => j <= 1 || videoStatus.promise.done)
+        .each((value, j) =>
+            console.log(
+                i,
+                j,
+                value,
+                videoStatus.downloaded,
+                videoStatus.failed,
+                videoStatus.downloadDirs)));

@@ -24,20 +24,20 @@ class Video {
             stream.on('error', error => this.status.onFail(error));
             stream.on('progress', (chunkLength, downloadedSize, totalSize) =>
                 this.status.onProgress(downloadedSize, totalSize));
+            let fileName = this.getFileName_();
             stream.on('end', () =>
-                writeStream.writeToFile(`${downloadDir}/${this.getFileName_()}`, () => this.status.onSuccess(downloadDir)));
+                writeStream.writeToFile(`${downloadDir}/${fileName}`, () => this.status.onSuccess(downloadDir, fileName)));
         } catch (error) {
             this.status.onFail(error);
         }
     }
 
-    move(path) {
-        if (this.status.downloadDirs.includes(path))
+    move(dir) {
+        if (this.status.downloadFiles.map(({dir}) => dir).includes(dir))
             return;
-        let fileName = this.getFileName_();
         return fs.promises.rename(
-            `${this.status.downloadDirs[0]}/${fileName}`,
-            `${path}/${fileName}`);
+            `${this.status.downloadFiles[0].dir}/${this.status.downloadFiles[0].name}`,
+            `${dir}/${this.getFileName_()}`);
     }
 
     stopDownload() {
@@ -56,11 +56,11 @@ class Video {
         return `${numberString} ${this.getFileName_()}`;
     }
 
-    getFileName_() { // todo make public
+    getFileName_() { // todo make public and getter
         return `${this.title_}-${this.id_}.webm`;
     }
 
-    isSame(fileName) {
+    isSame(fileName) { // todo, compare ids only
         return fileName.match(/-([^.]*)./)[1] === this.id_;
     }
 

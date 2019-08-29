@@ -47,7 +47,7 @@ class Syncher {
         this.videos_
             .productX(this.files_,
                 (video, {file}) => video.isSame(file),
-                (video, {dir}) => video.status.onSuccess(dir));
+                (video, {dir, file}) => video.status.onSuccess(dir, file));
         this.videos_
             .filter(video => video.status.downloaded)
             .each(() => this.summary_.incrementPredownloaded())

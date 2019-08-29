@@ -38,13 +38,12 @@ class Playlist extends Syncher.Synchable {
             : {title: `no playlist with id ${this.id_}`, length: 0};
     }
 
-    async includesVideo(id) {
+    includesVideo(id) {
         let promise = new PromiseW();
         this.videos_
             .filter(video => video.id_ === id)
             .each(() => promise.resolve(true));
-        await this.initVideosDone_;
-        promise.resolve(false);
+        this.initVideosDone_.then(() => promise.resolve(false));
         return promise;
     }
 

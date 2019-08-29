@@ -39,8 +39,13 @@ class Playlist extends Syncher.Synchable {
     }
 
     async includesVideo(id) {
+        let promise = new PromiseW();
+        this.videos_
+            .filter(video => video.id_ === id)
+            .each(() => promise.resolve(true));
         await this.initVideosDone_;
-        return this.videos_.outValues.some(video => video.id_ === id);
+        promise.resolve(false);
+        return promise;
     }
 
     getOverview_() {

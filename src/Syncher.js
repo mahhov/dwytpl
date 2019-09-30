@@ -15,7 +15,7 @@ class Synchable {
 }
 
 class Syncher {
-    constructor(synchable) {
+    constructor(synchable, downloadDir, alternateDirs = [], moveFromAlternativeDirs = false) {
         this.videos_ = synchable.videos;
         this.progressTracker_ = new ProgressTracker();
         this.summary_ = new Summary();
@@ -28,9 +28,11 @@ class Syncher {
             messages: this.progressTracker_.messageStream,
         };
         this.videos_.each((_, i) => this.summary_.setTotal(i + 1));
+
+        this.setDownloadDir_(downloadDir, alternateDirs, moveFromAlternativeDirs);
     }
 
-    async setDownloadDir(downloadDir, alternateDirs = [], moveFromAlternativeDirs = false) {
+    async setDownloadDir_(downloadDir, alternateDirs, moveFromAlternativeDirs) {
         this.downloadDir_ = downloadDir;
         this.dirs_ = $tream().write(downloadDir, ...alternateDirs);
         this.moveFromAlternativeDirs_ = moveFromAlternativeDirs;

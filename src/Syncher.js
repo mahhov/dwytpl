@@ -1,6 +1,6 @@
+const fs = require('fs').promises;
 const $tream = require('bs-better-stream');
 const Summary = require('./Summary');
-const FileWalker = require('file-walk-stream');
 const ProgressTracker = require('./ProgressTracker');
 
 class Synchable {
@@ -40,14 +40,13 @@ class Syncher {
     }
 
     async recheckDirs_() {
-        let walks = this.dirs_
-            .map(dir => FileWalker.walk(dir));
-        await walks.map(walk => walk.complete).promise;
-        this.files_ = walks
-            .flatMap(walk => walk.outValues);
+        let files = this.dirs_
+            .map(dir => ({dir, files: fs.readdir(dir)}))
+            .waitOn('files')
+            .flattenOn('files', 'file');
 
         this.videos_
-            .productX(this.files_,
+            .productX(files,
                 (video, {file}) => video.isSame(file),
                 (video, {dir, file}) => video.status.onSuccess(dir, file));
         this.videos_

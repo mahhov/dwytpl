@@ -41,13 +41,11 @@ syncher.download();
 
 ### Syncher
 
-##### `new Syncher(Playlist|Search synchable)`
-
-##### `void Syncher.setDownloadDir(string downloadDir)`
+##### `new Syncher(Playlist|Search synchable, string downloadDir, Array<string> alternateDirs, bool moveFromAltneativeDirs = false)`
 
 ##### `void Syncher.download(int parallelDownloadCount = 10)`
 
-##### `void Syncher.stopDownload()`
+##### `void Syncher.stopDownload(bool toBeReused = false)`
 
 ##### `Tracker Syncher.tracker`
 

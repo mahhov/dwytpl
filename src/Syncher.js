@@ -80,9 +80,10 @@ class Syncher {
             .each(({index_}) => this.progressTracker_.removeProgressLine(index_));
     }
 
-    stopDownload() {
+    stopDownload(toBeReused = false) {
         this.videos_.each(video => video.stopDownload());
-        return this.recheckDirs_();
+        if (toBeReused)
+            return this.recheckDirs_();
     }
 }
 

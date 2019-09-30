@@ -11,4 +11,4 @@ playlist.getOverview().then(overview => console.log(overview));
     '123',
     '0rgDg96pGn0x',
     '0rgDg96pGn4',
-].forEach((id, i) => playlist.includesVideo(id).then(a => console.log(i, a)));
+].forEach((id, i) => playlist.getPlaylistItemId(id).then(a => console.log(i, a)));

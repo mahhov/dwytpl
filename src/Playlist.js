@@ -38,15 +38,6 @@ class Playlist extends Syncher.Synchable {
             : {title: `no playlist with id ${this.id_}`, length: 0};
     }
 
-    includesVideo(id) {
-        let promise = new PromiseW();
-        this.videos_
-            .filter(video => video.id_ === id)
-            .each(() => promise.resolve(true));
-        this.initVideosDone_.then(() => promise.resolve(false));
-        return promise;
-    }
-
     getOverview_() {
         return this.overviewCache_ = this.overviewCache_ || youtube.getPlaylistOverview(this.id_);
     }

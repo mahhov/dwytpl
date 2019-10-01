@@ -1,6 +1,7 @@
-const Syncher = require('./Syncher');
-const Playlist = require('./Playlist');
-const Search = require('./Search');
-const SplitPrinter = require('./print/SplitPrinter');
-
-module.exports = {Syncher, Playlist, Search, SplitPrinter};
+module.exports = {
+    Syncher: require('./Syncher'),
+    Playlist: require('./Playlist'),
+    VideoList: require('./VideoList'),
+    Search: require('./Search'),
+    SplitPrinter: require('./print/SplitPrinter'),
+};

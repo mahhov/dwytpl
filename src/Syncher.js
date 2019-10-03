@@ -56,7 +56,7 @@ class Syncher {
             .each(video => video.move(this.downloadDir_));
     }
 
-    async download(parallelDownloadCount = 10) {
+    async download(parallelDownloadCount = 10, audioOnly = true) {
         if (!this.downloadDir_)
             throw 'invoke .setDownloadDir_(string downloadDir) before invoking .synch(int parallelDownloadCount = 10)';
 
@@ -68,7 +68,7 @@ class Syncher {
             .filter(video => !video.status.downloaded)
             .throttle(parallelDownloadCount);
         toDownload.stream
-            .each(video => video.download(this.downloadDir_))
+            .each(video => video.download(this.downloadDir_, audioOnly))
             .map(video => video.status)
             .set('index_', (_, i) => i)
             .each(({stream, index_}) => stream.each(text => this.progressTracker_.setProgressLine(index_, text)))

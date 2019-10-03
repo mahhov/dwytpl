@@ -15,7 +15,12 @@ syncher.tracker.progress.each(progressLines =>
 syncher.tracker.messages.each(messageLines =>
     splitPrinter.messageLines = messageLines);
 
-syncher.download();
+syncher.download(10, false);
 
-videoList.add('0n8cmj6vo3A');
-videoList.add('jijHJNJuoII');
+// videoList.add('0n8cmj6vo3A');
+// videoList.add('jijHJNJuoII');
+videoList.add('wsSwGlKd3e8');
+videoList.add('JwFntPV5WKc');
+videoList.add('IKxElccv0d8');
+videoList.add('cOFpLrbdefg');
+videoList.add('iWRolPgp9JY');

@@ -11,12 +11,12 @@ class Video {
         this.status = new VideoStatus(this.getName_());
     }
 
-    download(downloadDir) {
+    download(downloadDir, audioOnly = true) {
         // todo doing this in sync slows us down? (exists, mkdir, copyfile)
         if (!fs.existsSync(downloadDir))
             fs.mkdirSync(downloadDir);
 
-        let stream = this.getStream_();
+        let stream = this.getStream_(audioOnly);
         try {
             let writeStream = new MemoryWriteStream();
             stream.pipe(writeStream);
@@ -47,8 +47,11 @@ class Video {
         this.streamCache_ = null;
     }
 
-    getStream_() {
-        return this.streamCache_ = this.streamCache_ || ytdl(this.id_, {quality: 'highestaudio'});
+    getStream_(audioOnly) {
+        let ytdlOptions = audioOnly ?
+            {quality: 'highestaudio'} : // todo consider audio only for smaller storage
+            {quality: 'highestvideo', filter: 'audioandvideo'};
+        return this.streamCache_ = this.streamCache_ || ytdl(this.id_, ytdlOptions);
     }
 
     getName_() { // todo make public

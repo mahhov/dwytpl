@@ -8,7 +8,7 @@ class VideoList extends Syncher.Synchable {
         super();
         this.ids_ = $tream();
         this.videos_ = this.ids_
-            .map(async (id, i) => new Video(i, id, await VideoList.getTitle(id)))
+            .map(async (id, i) => new Video(i, id, await VideoList.getTitle_(id)))
             .wait();
     }
 
@@ -20,7 +20,7 @@ class VideoList extends Syncher.Synchable {
         this.ids_.write(id);
     }
 
-    static async getTitle(id) {
+    static async getTitle_(id) {
         let response = await youtube.getVideosTitles([id]);
         return response.items[0].snippet.title;
     }

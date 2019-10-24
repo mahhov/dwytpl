@@ -16,7 +16,7 @@ class VideoList extends Syncher.Synchable {
         return {title: 'video list', length: this.ids_.length};
     }
 
-    async add(id) {
+    add(id) {
         this.ids_.write(id);
     }
 

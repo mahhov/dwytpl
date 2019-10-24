@@ -28,7 +28,6 @@ class Syncher {
             messages: this.progressTracker_.messageStream,
         };
         this.videos_.each((_, i) => this.summary_.setTotal(i + 1));
-
         this.setDownloadDir_(downloadDir, alternateDirs, moveFromAlternativeDirs);
     }
 

@@ -63,8 +63,9 @@ class Video {
         return `${this.title_}-${this.id_}.webm`;
     }
 
-    isSame(fileName) { // todo, compare ids only
-        return fileName.match(/-([^.]*)./)[1] === this.id_;
+    static idFromFileName(fileName) {
+        let m = fileName.match(/-([^.]*)./);
+        return m && m[1];
     }
 
     static cleanTitle_(title) {

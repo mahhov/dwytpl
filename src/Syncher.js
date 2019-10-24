@@ -2,6 +2,7 @@ const fs = require('fs').promises;
 const $tream = require('bs-better-stream');
 const Summary = require('./Summary');
 const ProgressTracker = require('./ProgressTracker');
+const Video = require('./Video');
 
 class Synchable {
     // todo deprecated
@@ -46,7 +47,7 @@ class Syncher {
 
         this.videos_
             .productX(files,
-                (video, {file}) => video.isSame(file),
+                (video, {file}) => video.id_ === Video.idFromFileName(file),
                 (video, {dir, file}) => video.status.onSuccess(dir, file));
         this.videos_
             .filter(video => video.status.downloaded)

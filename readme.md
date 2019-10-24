@@ -35,7 +35,7 @@ syncher.download();
 
 ### Video
 
-##### `boolean Video.isSame(string fileName)`
+##### `static string idFromFileName(string fileName)`
 
 ##### `VideoStatus status`
 

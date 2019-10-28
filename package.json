@@ -4,7 +4,7 @@
   "description": "download youtube playlists",
   "main": "src/index",
   "scripts": {
-    "test": "node test/run",
+    "test-syncher": "node test/syncherTest",
     "test-tracker": "node test/trackerTest",
     "test-playlist": "node test/playlistTest",
     "test-download": "node test/downloadTest",

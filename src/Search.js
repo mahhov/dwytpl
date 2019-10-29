@@ -11,9 +11,10 @@ class Search extends Syncher.Synchable {
         this.videos_ = this.queries_
             .pluck('items')
             .flatten()
-            .map(({id: {videoId}, snippet: {title}}) => ({videoId, title}))
+            .map(({id: {videoId}, snippet: {title, thumbnails}}) =>
+                ({videoId, title, thumbnail: thumbnails && thumbnails.default.url}))
             .uniqueOn('videoId')
-            .map(({videoId, title}, i) => new Video(i, videoId, title));
+            .map(({videoId, title, thumbnail}, i) => new Video(i, videoId, title, thumbnail));
     }
 
     query(query) {

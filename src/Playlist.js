@@ -28,7 +28,8 @@ class Playlist extends Syncher.Synchable {
             .pluck('items')
             .flatten()
             .pluck('snippet')
-            .map(({resourceId: {videoId}, title}, i) => new Video(i, videoId, title));
+            .map(({resourceId: {videoId}, title, thumbnails}, i) =>
+                new Video(i, videoId, title, thumbnails && thumbnails.default.url));
     }
 
     async getOverview() {

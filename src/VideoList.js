@@ -3,13 +3,16 @@ const Syncher = require('./Syncher');
 const Video = require('./Video');
 const youtube = require('./youtube');
 
+// todo move some shared code to Synchable
 class VideoList extends Syncher.Synchable {
     constructor() {
         super();
+        this.videoCache_ = {};
         this.ids_ = $tream();
         this.videos_ = this.ids_
-            .map(async (id, i) => new Video(i, id, await VideoList.getTitle_(id)))
-            .wait();
+            .pluck('items')
+            .flatten()
+            .map(({id, snippet: {title, thumbnails}}) => new Video(i, id, title, thumbnails && thumbnails.default.url))
     }
 
     async getOverview() {
@@ -17,12 +20,11 @@ class VideoList extends Syncher.Synchable {
     }
 
     add(id) {
-        this.ids_.write(id);
+        this.ids_.writePromise(this.getVideo_(id));
     }
 
-    static async getTitle_(id) {
-        let response = await youtube.getVideosTitles([id]);
-        return response.items[0].snippet.title;
+    getVideo_(id) {
+        return this.videoCache_[id] = this.videoCache_[id] || youtube.getVideosTitles([id]);
     }
 }
 

@@ -4,10 +4,11 @@ const fs = require('fs');
 const MemoryWriteStream = require('./MemoryWriteStream');
 
 class Video {
-    constructor(number, id, title) {
+    constructor(number, id, title, thumbnail) {
         this.number_ = number;
         this.id_ = id; // todo make public
         this.title_ = Video.cleanTitle_(title);
+        this.thumbnail = thumbnail;
         this.status = new VideoStatus(this.getName_());
     }
 

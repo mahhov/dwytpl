@@ -25,9 +25,8 @@ class Video {
             stream.on('error', error => this.status.onFail(error));
             stream.on('progress', (chunkLength, downloadedSize, totalSize) =>
                 this.status.onProgress(downloadedSize, totalSize));
-            let fileName = this.getFileName_();
             stream.on('end', () =>
-                writeStream.writeToFile(`${downloadDir}/${fileName}`, () => this.status.onSuccess(downloadDir, fileName)));
+                writeStream.writeToFile(`${downloadDir}/${this.fileName}`, () => this.status.onSuccess(downloadDir, this.fileName)));
         } catch (error) {
             this.status.onFail(error);
         }
@@ -38,7 +37,7 @@ class Video {
             return;
         return fs.promises.rename(
             `${this.status.downloadFiles[0].dir}/${this.status.downloadFiles[0].name}`,
-            `${dir}/${this.getFileName_()}`);
+            `${dir}/${this.fileName}`);
     }
 
     stopDownload() {
@@ -69,7 +68,7 @@ class Video {
 
     get numberedFileName() {
         let numberString = this.number_.toString().padStart(4, 0);
-        return `${numberString} ${this.getFileName_()}`;
+        return `${numberString} ${this.fileName}`;
     }
 
     static idFromFileName(fileName) {

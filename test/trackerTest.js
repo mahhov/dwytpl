@@ -2,11 +2,9 @@ const path = require('path');
 const dwytpl = require('../src/index');
 
 let playlist = new dwytpl.Playlist('OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw');
-let syncher = new dwytpl.Syncher(playlist);
-let tracker = syncher.tracker;
 let downloadDir = path.resolve(__dirname, '../downloads');
-
-syncher.setDownloadDir(downloadDir);
+let syncher = new dwytpl.Syncher(playlist, downloadDir);
+let tracker = syncher.tracker;
 syncher.download();
 
 tracker.title.each(([title]) =>

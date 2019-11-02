@@ -72,7 +72,7 @@ class Syncher {
             .each(video => video.download(this.downloadDir_, audioOnly))
             .each(video => video.status.stream.each(text =>
                 this.progressTracker_.setProgressLine(video.index_, ProgressTracker.padText(video.numberedFileName) + text)))
-            .map(async video => await video.status && video)
+            .map(video => video.status.promise.then(() => video, () => video))
             .wait()
             .each(toDownload.nextOne)
             .filterEach(({status}) => status.downloaded,

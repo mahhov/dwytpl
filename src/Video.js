@@ -6,10 +6,10 @@ const MemoryWriteStream = require('./MemoryWriteStream');
 class Video {
     constructor(number, id, title, thumbnail) {
         this.number_ = number;
-        this.id_ = id; // todo make public
+        this.id_ = id;
         this.title_ = Video.cleanTitle_(title);
         this.thumbnail = thumbnail;
-        this.status = new VideoStatus(this.getName_());
+        this.status = new VideoStatus();
     }
 
     download(downloadDir, audioOnly = true) {
@@ -55,13 +55,21 @@ class Video {
         return this.streamCache_ = this.streamCache_ || ytdl(this.id_, ytdlOptions);
     }
 
-    getName_() { // todo make public
-        let numberString = this.number_.toString().padStart(4, 0);
-        return `${numberString} ${this.getFileName_()}`;
+    get id() {
+        return this.id_;
     }
 
-    getFileName_() { // todo make public and getter
+    get title() {
+        return this.title_;
+    }
+
+    get fileName() {
         return `${this.title_}-${this.id_}.webm`;
+    }
+
+    get numberedFileName() {
+        let numberString = this.number_.toString().padStart(4, 0);
+        return `${numberString} ${this.getFileName_()}`;
     }
 
     static idFromFileName(fileName) {

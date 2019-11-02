@@ -1,18 +1,10 @@
 const Status = require('./Status');
 
 class VideoStatus extends Status {
-    constructor(prefix) {
+    constructor() {
         super();
-        this.prefix_ = prefix;
         this.downloadFiles = []; // dir & name tuples
         this.onInitialization_();
-    }
-
-    setStatus_(status) {
-        const PREFIX_MAX_LENGTH = 45, WHITESPACE = 5;
-        let prefix = this.prefix_.slice(0, PREFIX_MAX_LENGTH).padEnd(PREFIX_MAX_LENGTH + WHITESPACE);
-        status = prefix + status;
-        super.setStatus_(status);
     }
 
     onSuccess(downloadDir, downloadName) {

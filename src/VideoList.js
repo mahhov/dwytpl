@@ -3,7 +3,6 @@ const Syncher = require('./Syncher');
 const Video = require('./Video');
 const youtube = require('./youtube');
 
-// todo move some shared code to Synchable
 class VideoList extends Syncher.Synchable {
     constructor() {
         super();

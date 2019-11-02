@@ -23,6 +23,16 @@ syncher.download();
 
 ##### `new Playlist(string playlistId)`
 
+##### `Stream<Video> videos`
+
+### VideoList
+
+##### `new VideoList()`
+
+##### `void add(string videoId)`
+
+##### `Stream<Video> videos`
+
 ### Search
 
 ##### `new Search()`
@@ -35,13 +45,41 @@ syncher.download();
 
 ### Video
 
-##### `static string idFromFileName(string fileName)`
+##### `void download(string downloadDir, bool audioOnly = true)`
+
+##### `void move(strng dir)`
+
+##### `void stopDownload()`
 
 ##### `VideoStatus status`
 
+##### `string id`
+
+##### `string title`
+
+##### `string fileName`
+
+##### `string numberedFileName`
+
+##### `string thumbnail`
+
+### `string Video.idFromFileName(string fileName)`
+
+### VideoStatus
+
+##### `Stream<string> stream`
+
+##### `Promise promise`
+
+##### `bool downloaded`
+
+##### `bool failed`
+
+##### `Array<{string dir, string name}> downloadFiles`
+
 ### Syncher
 
-##### `new Syncher(Playlist|Search synchable, string downloadDir, Array<string> alternateDirs, bool moveFromAltneativeDirs = false)`
+##### `new Syncher(Playlist|VideoList|Search synchable, string downloadDir, Array<string> alternateDirs, bool moveFromAltneativeDirs = false)`
 
 ##### `void Syncher.download(int parallelDownloadCount = 10)`
 
@@ -76,7 +114,6 @@ streams values will be of the format
 
 ```
 [
-    '<number> <video title>#<video id>' +
     'waiting to start' |
     'started' |
     '<percent> (<time> remaining) [<size>]' |
@@ -89,18 +126,6 @@ streams values will be of the format
 ##### `Stream<string[]> Tracker.messages`
 
 stream values will be of the same format as `Tracker.progress`'s stream values
-
-### VideoStatus
-
-##### `Stream<string> stream`
-
-##### `Promise promise`
-
-##### `bool downloaded`
-
-##### `bool failed`
-
-##### `string downloadDir`
 
 #### example using Tracker
 

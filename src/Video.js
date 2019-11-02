@@ -6,8 +6,8 @@ const MemoryWriteStream = require('./MemoryWriteStream');
 class Video {
     constructor(number, id, title, thumbnail) {
         this.number_ = number;
-        this.id_ = id;
-        this.title_ = Video.cleanTitle_(title);
+        this.id = id;
+        this.title = Video.cleanTitle_(title);
         this.thumbnail = thumbnail;
         this.status = new VideoStatus();
     }
@@ -51,19 +51,11 @@ class Video {
         let ytdlOptions = audioOnly ?
             {quality: 'highestaudio'} : // todo consider audio only for smaller storage
             {quality: 'highestvideo', filter: 'audioandvideo'};
-        return this.streamCache_ = this.streamCache_ || ytdl(this.id_, ytdlOptions);
-    }
-
-    get id() {
-        return this.id_;
-    }
-
-    get title() {
-        return this.title_;
+        return this.streamCache_ = this.streamCache_ || ytdl(this.id, ytdlOptions);
     }
 
     get fileName() {
-        return `${this.title_}-${this.id_}.webm`;
+        return `${this.title}-${this.id}.webm`;
     }
 
     get numberedFileName() {

@@ -47,7 +47,7 @@ class Syncher {
 
         this.videos_
             .productX(files,
-                (video, {file}) => video.id_ === Video.idFromFileName(file),
+                (video, {file}) => video.id === Video.idFromFileName(file),
                 (video, {dir, file}) => video.status.onSuccess(dir, file));
         this.videos_
             .filter(video => video.status.downloaded)

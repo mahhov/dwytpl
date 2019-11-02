@@ -12,7 +12,7 @@ class VideoList extends Syncher.Synchable {
         this.videos_ = this.ids_
             .pluck('items')
             .flatten()
-            .map(({id, snippet: {title, thumbnails}}) => new Video(i, id, title, thumbnails && thumbnails.default.url))
+            .map(({id, snippet: {title, thumbnails}}, i) => new Video(i, id, title, thumbnails && thumbnails.default.url))
     }
 
     async getOverview() {

@@ -34,6 +34,10 @@ class ProgressTracker {
     updateMessageStreams_() {
         this.messageStream.write(this.messageLines_);
     }
+
+    static padText(text, maxLength = 45, whitespace = 5) {
+        return text.slice(0, maxLength).padEnd(maxLength + whitespace);
+    }
 }
 
 module.exports = ProgressTracker;

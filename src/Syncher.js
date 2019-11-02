@@ -68,13 +68,14 @@ class Syncher {
             .filter(video => !video.status.downloaded)
             .throttle(parallelDownloadCount);
         toDownload.stream
-            .each(video => video.download(this.downloadDir_, audioOnly))
-            .map(video => video.status)
             .set('index_', (_, i) => i)
-            .each(({stream, index_}) => stream.each(text => this.progressTracker_.setProgressLine(index_, text)))
-            .waitOn('promise')
+            .each(video => video.download(this.downloadDir_, audioOnly))
+            .each(video => video.status.stream.each(text =>
+                this.progressTracker_.setProgressLine(video.index_, ProgressTracker.padText(video.numberedFileName) + text)))
+            .map(async video => await video.status && video)
+            .wait()
             .each(toDownload.nextOne)
-            .filterEach(status => status.downloaded,
+            .filterEach(({status}) => status.downloaded,
                 () => this.summary_.incrementDownloaded(),
                 () => this.summary_.incrementFailed())
             .each(({index_}) => this.progressTracker_.removeProgressLine(index_));

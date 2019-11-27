@@ -15,12 +15,7 @@ syncher.tracker.progress.each(progressLines =>
 syncher.tracker.messages.each(messageLines =>
     splitPrinter.messageLines = messageLines);
 
-syncher.download(10, false);
+syncher.download(10);
 
-// videoList.add('0n8cmj6vo3A');
-// videoList.add('jijHJNJuoII');
-videoList.add('wsSwGlKd3e8');
-videoList.add('JwFntPV5WKc');
-videoList.add('IKxElccv0d8');
-videoList.add('cOFpLrbdefg');
-videoList.add('iWRolPgp9JY');
+videoList.add('iWRolPgp9JY'); // 4 mb without video
+videoList.add('QvtjAoFBmVg\n'); // 62 mb with highestaudio, 3mb with audioonly & highestaudio

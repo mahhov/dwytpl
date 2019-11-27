@@ -1,6 +1,6 @@
 # dwytpl
 
-download youtube playlist
+download youtube playlists, videos, and search queries.
 
 ## example
 
@@ -45,7 +45,7 @@ syncher.download();
 
 ### Video
 
-##### `void download(string downloadDir, bool audioOnly = true)`
+##### `void download(string downloadDir, ytdlOptions = {filter: 'audioonly'})`
 
 ##### `void move(strng dir)`
 
@@ -81,11 +81,11 @@ syncher.download();
 
 ##### `new Syncher(Playlist|VideoList|Search synchable, string downloadDir, Array<string> alternateDirs, bool moveFromAltneativeDirs = false)`
 
-##### `void Syncher.download(int parallelDownloadCount = 10)`
+##### `void download(int parallelDownloadCount = 10, ytdlOptions = {filter: 'audioonly'})`
 
-##### `void Syncher.stopDownload(bool toBeReused = false)`
+##### `void stopDownload(bool toBeReused = false)`
 
-##### `Tracker Syncher.tracker`
+##### `Tracker tracker`
 
 ### Tracker
 
@@ -139,7 +139,7 @@ let tracker = syncher.tracker;
 let downloadDir = path.resolve(__dirname, '../downloads');
 
 syncher.setDownloadDir(downloadDir);
-sumcher.download();
+syncher.download();
 
 tracker.title.each(([title]) =>
     console.log('new title:', title));

@@ -12,7 +12,7 @@ class Video {
         this.status = new VideoStatus();
     }
 
-    download(downloadDir, audioOnly = true) {
+    download(downloadDir, ytdlOptions = {filter: 'audioonly'}) {
         // todo doing this in sync slows us down? (exists, mkdir, copyfile)
         if (!fs.existsSync(downloadDir))
             fs.mkdirSync(downloadDir);
@@ -47,10 +47,7 @@ class Video {
         this.streamCache_ = null;
     }
 
-    getStream_(audioOnly) {
-        let ytdlOptions = audioOnly ?
-            {quality: 'highestaudio'} : // todo consider audio only for smaller storage
-            {quality: 'highestvideo', filter: 'audioandvideo'};
+    getStream_(ytdlOptions) {
         return this.streamCache_ = this.streamCache_ || ytdl(this.id, ytdlOptions);
     }
 

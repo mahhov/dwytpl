@@ -17,7 +17,7 @@ class Video {
         if (!fs.existsSync(downloadDir))
             fs.mkdirSync(downloadDir);
 
-        let stream = this.getStream_(audioOnly);
+        let stream = this.getStream_(ytdlOptions);
         try {
             let writeStream = new MemoryWriteStream();
             stream.pipe(writeStream);

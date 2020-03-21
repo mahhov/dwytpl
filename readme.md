@@ -11,9 +11,8 @@ const path = '~\my-playlist-downloads';
 const playlistId = 'OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw';
 
 let playlist = new dwytpl.Playlist(playlistId);
-let syncher = new dwytpl.Syncher(playlist);
+let syncher = new dwytpl.Syncher(playlist, path);
 
-syncher.setDownloadDir(path);
 syncher.download();
 ```
 
@@ -133,12 +132,13 @@ stream values will be of the same format as `Tracker.progress`'s stream values
 const path = require('path');
 const dwytpl = require('dwytpl');
 
-let playlist = new dwytpl.Playlist('OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw');
-let syncher = new dwytpl.Syncher(playlist);
-let tracker = syncher.tracker;
 let downloadDir = path.resolve(__dirname, '../downloads');
+let playlistId = 'OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw';
 
-syncher.setDownloadDir(downloadDir);
+let playlist = new dwytpl.Playlist(playlistId);
+let syncher = new dwytpl.Syncher(playlist, downloadDir);
+let tracker = syncher.tracker;
+
 syncher.download();
 
 tracker.title.each(([title]) =>

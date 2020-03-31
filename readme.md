@@ -11,7 +11,7 @@ const path = '~\my-playlist-downloads';
 const playlistId = 'OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw';
 
 let playlist = new dwytpl.Playlist(playlistId);
-let syncher = new dwytpl.Syncher(playlist, path);
+let syncher = new dwytpl.Syncher(playlist.videos, path);
 
 syncher.download();
 ```
@@ -19,69 +19,47 @@ syncher.download();
 ## public api
 
 ### Playlist
-
 ##### `new Playlist(string playlistId)`
-
 ##### `Stream<Video> videos`
+##### `Promise<string> title`
+##### `Promise<number> length`
 
 ### VideoList
 
 ##### `new VideoList()`
-
 ##### `void add(string videoId)`
-
 ##### `Stream<Video> videos`
 
 ### Search
 
 ##### `new Search()`
-
-##### `void query(string query)`
-
+##### `void query(string query, number maxResults = 15)`
 ##### `Stream<Video> videos`
-
-#####  
 
 ### Video
 
 ##### `void download(string downloadDir, ytdlOptions = {filter: 'audioonly'})`
-
 ##### `void move(strng dir)`
-
 ##### `void stopDownload()`
-
 ##### `VideoStatus status`
-
 ##### `string id`
-
 ##### `string title`
-
 ##### `string fileName`
-
-##### `string numberedFileName`
-
 ##### `string thumbnail`
-
-### `string Video.idFromFileName(string fileName)`
+##### `string Video.idFromFileName(string fileName)`
 
 ### VideoStatus
 
 ##### `Stream<string> stream`
-
 ##### `Promise promise`
-
 ##### `bool downloaded`
-
 ##### `bool failed`
-
 ##### `Array<{string dir, string name}> downloadFiles`
 
 ### Syncher
 
-##### `new Syncher(Playlist|VideoList|Search synchable, string downloadDir, Array<string> alternateDirs, bool moveFromAltneativeDirs = false)`
-
-##### `void download(int parallelDownloadCount = 10, ytdlOptions = {filter: 'audioonly'})`
-
+##### `new Syncher(Stream<Video> videos, string downloadDir, string[] alternateDirs, bool moveFromAltneativeDirs = false)`
+##### `void download(number parallelDownloadCount = 10, ytdlOptions = {filter: 'audioonly'})`
 ##### `void stopDownload(bool toBeReused = false)`
 
 ##### `Tracker tracker`
@@ -109,7 +87,7 @@ stream values will be of the format
 
 ##### `Stream<string[]> Tracker.progress`
 
-streams values will be of the format
+stream values will be of the format
 
 ```
 [
@@ -136,7 +114,7 @@ let downloadDir = path.resolve(__dirname, '../downloads');
 let playlistId = 'OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw';
 
 let playlist = new dwytpl.Playlist(playlistId);
-let syncher = new dwytpl.Syncher(playlist, downloadDir);
+let syncher = new dwytpl.Syncher(playlist.videos, downloadDir);
 let tracker = syncher.tracker;
 
 syncher.download();
@@ -161,7 +139,7 @@ tracker.messages.each(lines => {
 
 `SplitPrinter` is an in-place console printer.
 
-##### `new SplitPrinter(int titleLines, int summaryLines, int progressLines, int messageLines)`
+##### `new SplitPrinter(number titleLines, number summaryLines, number progressLines, number messageLines)`
 
 ##### `set titleLines(string[])`
 
@@ -219,4 +197,4 @@ skipped 0. downloaded 7. failed 0. remaining 58. total 65
 
 ## note on Stream's
 
-this module and its api uses `Stream`s extensively. For detailed information about streams, see the [bs-better-stream npm package](https://www.npmjs.com/package/bs-better-stream).
+this module and its api use `Stream`s extensively. For detailed information about streams, see the [bs-better-stream npm package](https://www.npmjs.com/package/bs-better-stream).

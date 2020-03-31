@@ -1,11 +1,10 @@
+const fs = require('fs');
 const ytdl = require('ytdl-core');
 const VideoStatus = require('./VideoStatus');
-const fs = require('fs');
 const MemoryWriteStream = require('./MemoryWriteStream');
 
 class Video {
-    constructor(number, id, title, thumbnail) {
-        this.number_ = number;
+    constructor(id, title, thumbnail) {
         this.id = id;
         this.title = Video.cleanTitle_(title);
         this.thumbnail = thumbnail;
@@ -55,14 +54,8 @@ class Video {
         return `${this.title}-${this.id}.webm`;
     }
 
-    get numberedFileName() {
-        let numberString = this.number_.toString().padStart(4, 0);
-        return `${numberString} ${this.fileName}`;
-    }
-
     static idFromFileName(fileName) {
-        let m = fileName.match(/-([^.]*)./);
-        return m && m[1];
+        return fileName.match(/-([^.]*)./)?.[1];
     }
 
     static cleanTitle_(title) {

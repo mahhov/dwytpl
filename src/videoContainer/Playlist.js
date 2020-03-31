@@ -1,10 +1,10 @@
 const $tream = require('bs-better-stream');
 const PromiseW = require('promise-w');
-const Syncher = require('./Syncher');
-const Video = require('./Video');
-const youtube = require('./youtube');
+const VideoContainer = require('./VideoContainer');
+const Video = require('../Video');
+const youtube = require('../youtube');
 
-class Playlist extends Syncher.Synchable {
+class Playlist extends VideoContainer {
     constructor(id) {
         super();
         this.id_ = id;
@@ -16,7 +16,7 @@ class Playlist extends Syncher.Synchable {
         this.initVideosDone_ = new PromiseW();
         let pages = $tream();
         let responses = pages
-            .map(this.getPage_.bind(this))
+            .map(page => this.getPage_(page))
             .wait();
         responses
             .pluck('nextPageToken')
@@ -28,15 +28,16 @@ class Playlist extends Syncher.Synchable {
             .pluck('items')
             .flatten()
             .pluck('snippet')
-            .map(({resourceId: {videoId}, title, thumbnails}, i) =>
-                new Video(i, videoId, title, thumbnails && thumbnails.default.url));
+            .map(({resourceId: {videoId}, title, thumbnails}) =>
+                new Video(videoId, title, thumbnails && thumbnails.default.url));
     }
 
-    async getOverview() {
-        let playlist = (await this.getOverview_()).items[0];
-        return playlist
-            ? {title: playlist.snippet.title, length: playlist.contentDetails.itemCount}
-            : {title: `no playlist with id ${this.id_}`, length: 0};
+    get title() {
+        return this.getOverview_().then(overview => overview.items[0]?.snippet.title);
+    }
+
+    get length() {
+        return this.getOverview_().then(overview => overview.items[0]?.contentDetails.itemCount);
     }
 
     getOverview_() {

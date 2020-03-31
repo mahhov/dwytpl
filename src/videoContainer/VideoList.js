@@ -1,9 +1,9 @@
 const $tream = require('bs-better-stream');
-const Syncher = require('./Syncher');
-const Video = require('./Video');
-const youtube = require('./youtube');
+const VideoContainer = require('./VideoContainer');
+const Video = require('../Video');
+const youtube = require('../youtube');
 
-class VideoList extends Syncher.Synchable {
+class VideoList extends VideoContainer {
     constructor() {
         super();
         this.videoCache_ = {};
@@ -11,11 +11,7 @@ class VideoList extends Syncher.Synchable {
         this.videos_ = this.ids_
             .pluck('items')
             .flatten()
-            .map(({id, snippet: {title, thumbnails}}, i) => new Video(i, id, title, thumbnails && thumbnails.default.url))
-    }
-
-    async getOverview() {
-        return {title: 'video list', length: this.ids_.length};
+            .map(({id, snippet: {title, thumbnails}}) => new Video(id, title, thumbnails && thumbnails.default.url))
     }
 
     add(id) {

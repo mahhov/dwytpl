@@ -4,26 +4,12 @@ const Summary = require('./Summary');
 const ProgressTracker = require('./ProgressTracker');
 const Video = require('./Video');
 
-class Synchable {
-    // todo deprecated
-    async getOverview() {
-        return {title: '', length: 0};
-    }
-
-    get videos() {
-        return this.videos_ || $tream();
-    }
-}
-
 class Syncher {
-    constructor(synchable, downloadDir, alternateDirs = [], moveFromAlternativeDirs = false) {
-        this.videos_ = synchable.videos;
+    constructor(videos, downloadDir, alternateDirs = [], moveFromAlternativeDirs = false) {
+        this.videos_ = videos;
         this.progressTracker_ = new ProgressTracker();
         this.summary_ = new Summary();
         this.tracker = {
-            title: $tream()
-                .writePromise(synchable.getOverview())
-                .map(({title, length}) => [`${title} [${length}]`]),
             summary: this.summary_.stream,
             progress: this.progressTracker_.progressStream,
             messages: this.progressTracker_.messageStream,
@@ -58,7 +44,7 @@ class Syncher {
 
     async download(parallelDownloadCount = 10, ytdlOptions = {filter: 'audioonly'}) {
         if (!this.downloadDir_)
-            throw 'invoke .setDownloadDir_(string downloadDir) before invoking .synch(int parallelDownloadCount = 10)';
+            throw 'invoke .setDownloadDir_(string downloadDir) before invoking .synch(number parallelDownloadCount = 10)';
 
         await this.recheckDirsPromise_;
 
@@ -71,7 +57,7 @@ class Syncher {
             .set('index_', (_, i) => i)
             .each(video => video.download(this.downloadDir_, ytdlOptions))
             .each(video => video.status.stream.each(text =>
-                this.progressTracker_.setProgressLine(video.index_, ProgressTracker.padText(video.numberedFileName) + text)))
+                this.progressTracker_.setProgressLine(video.index_, ProgressTracker.padText(video.fileName) + text)))
             .map(video => video.status.promise.then(() => video, () => video))
             .wait()
             .each(toDownload.nextOne)
@@ -87,7 +73,5 @@ class Syncher {
             return this.recheckDirs_();
     }
 }
-
-Syncher.Synchable = Synchable;
 
 module.exports = Syncher;

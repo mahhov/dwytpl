@@ -5,7 +5,7 @@ let downloadDir2 = path.resolve(__dirname, '../downloads2');
 
 let search = new dwytpl.Search();
 search.query('jon bovi');
-let syncher = new dwytpl.Syncher(search);
+let syncher = new dwytpl.Syncher(search.videos);
 syncher.setDownloadDir(downloadDir, [downloadDir2], true);
 // search.query('hardwell');
 syncher.download();

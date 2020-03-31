@@ -4,7 +4,7 @@ const path = './downloads';
 const playlistId = 'OLAK5uy_mt1gUnCahoe2g5rYOCCxLU_pMxBxcSbPw';
 
 let playlist = new dwytpl.Playlist(playlistId);
-let syncher = new dwytpl.Syncher(playlist, path);
+let syncher = new dwytpl.Syncher(playlist.videos, path);
 
 syncher.download();
 

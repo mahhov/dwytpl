@@ -17,7 +17,10 @@ const getPlaylistPage = (playlistId, pageToken) =>
 const getSearch = (query, maxResults) =>
     get('search', {part: 'snippet', maxResults, type: 'video', q: query, key: API_KEY});
 
+const getSearchRelated = (relatedToVideoId, maxResults) =>
+    get('search', {part: 'snippet', maxResults, type: 'video', relatedToVideoId, key: API_KEY});
+
 const getVideosTitles = ids =>
     get('videos', {part: 'snippet', id: ids.join(','), key: API_KEY});
 
-module.exports = {getPlaylistOverview, getPlaylistPage, getSearch, getVideosTitles};
+module.exports = {getPlaylistOverview, getPlaylistPage, getSearch, getSearchRelated, getVideosTitles};

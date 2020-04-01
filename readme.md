@@ -34,6 +34,7 @@ syncher.download();
 
 ##### `new Search()`
 ##### `void query(string query, number maxResults = 15)`
+##### `void queryRelated(string videoId, number maxResults = 15)`
 ##### `Stream<Video> videos`
 
 ### Video

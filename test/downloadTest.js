@@ -28,7 +28,7 @@ stream.on('error', error => console.log('error', error));
 stream.on('progress', (chunkLength, downloadedSize, totalSize) =>
     console.log('progress', downloadedSize, '/', totalSize, Math.round(downloadedSize / totalSize * 100)));
 stream.on('end', () =>
-    writeStream.writeToFile('./songDefault.webm', () => console.log('end')));
+    writeStream.writeToFile('./songDefault.webm').then(() => console.log('end'));
 
 // ytdl('http://www.youtube.com/watch?v=HWyEEj2pSt0')
 // 	.pipe(fs.createWriteStream('video.flv'));

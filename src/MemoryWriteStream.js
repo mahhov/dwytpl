@@ -12,9 +12,12 @@ class MemoryWriteStream extends stream.Writable {
 		next();
 	}
 
-	writeToFile(path, callback = () => {}) {
-		let buffer = Buffer.concat(this.chunks_);
-		let writeStream = fs.writeFile(path, buffer, callback);
+	get buffer() {
+		return Buffer.concat(this.chunks_);
+	}
+
+	writeToFile(path) {
+		fs.promises.writeFile(path, this.buffer);
 	}
 }
 

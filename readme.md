@@ -47,7 +47,10 @@ syncher.download();
 ##### `string title`
 ##### `string fileName`
 ##### `string thumbnail`
+##### `<Buffer> buffer`
 ##### `string Video.idFromFileName(string fileName)`
+##### `Video.on('data', buffer => {})`
+##### `Video.on('end', buffer => {})`
 
 ### VideoStatus
 

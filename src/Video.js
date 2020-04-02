@@ -1,10 +1,12 @@
+const EventEmitter = require('events');
 const fs = require('fs');
 const ytdl = require('ytdl-core');
 const VideoStatus = require('./VideoStatus');
 const MemoryWriteStream = require('./MemoryWriteStream');
 
-class Video {
+class Video extends EventEmitter {
     constructor(id, title, thumbnail) {
+        super();
         this.id = id;
         this.title = Video.cleanTitle_(title);
         this.thumbnail = thumbnail;
@@ -18,14 +20,19 @@ class Video {
 
         let stream = this.getStream_(ytdlOptions);
         try {
-            let writeStream = new MemoryWriteStream();
-            stream.pipe(writeStream);
+            this.writeStream_ = new MemoryWriteStream();
+            stream.pipe(this.writeStream_);
             stream.once('response', () => this.status.onStart());
             stream.on('error', error => this.status.onFail(error));
-            stream.on('progress', (chunkLength, downloadedSize, totalSize) =>
-                this.status.onProgress(downloadedSize, totalSize));
-            stream.on('end', () =>
-                writeStream.writeToFile(`${downloadDir}/${this.fileName}`, () => this.status.onSuccess(downloadDir, this.fileName)));
+            stream.on('progress', (chunkLength, downloadedSize, totalSize) => {
+                this.emit('data', this.buffer);
+                this.status.onProgress(downloadedSize, totalSize)
+            });
+            stream.on('end', async () => {
+                await this.writeStream_.writeToFile(`${downloadDir}/${this.fileName}`);
+                this.emit('end', this.buffer);
+                this.status.onSuccess(downloadDir, this.fileName);
+            });
         } catch (error) {
             this.status.onFail(error);
         }
@@ -52,6 +59,10 @@ class Video {
 
     get fileName() {
         return `${this.title}-${this.id}.webm`;
+    }
+
+    get buffer() {
+        return this.writeStream_?.buffer;
     }
 
     static idFromFileName(fileName) {

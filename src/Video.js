@@ -69,6 +69,10 @@ class Video extends EventEmitter {
         return fileName.match(/-([^.]*)./)?.[1];
     }
 
+    static titleFromFileName(fileName) {
+        return fileName.match(/(.*)-/)?.[1];
+    }
+
     static cleanTitle_(title) {
         return title.replace(/[^\w ]/g, '').replace(/ +/g, '_');
     }

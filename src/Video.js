@@ -25,12 +25,12 @@ class Video extends EventEmitter {
             stream.once('response', () => this.status.onStart());
             stream.on('error', error => this.status.onFail(error));
             stream.on('progress', (chunkLength, downloadedSize, totalSize) => {
-                this.emit('data', this.buffer);
+                this.emit('data');
                 this.status.onProgress(downloadedSize, totalSize)
             });
             stream.on('end', async () => {
                 await this.writeStream_.writeToFile(`${downloadDir}/${this.fileName}`);
-                this.emit('end', this.buffer);
+                this.emit('end');
                 this.status.onSuccess(downloadDir, this.fileName);
             });
         } catch (error) {

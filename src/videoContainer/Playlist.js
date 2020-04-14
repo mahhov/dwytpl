@@ -29,7 +29,7 @@ class Playlist extends VideoContainer {
             .flatten()
             .pluck('snippet')
             .map(({resourceId: {videoId}, title, thumbnails}) =>
-                new Video(videoId, title, thumbnails && thumbnails.default.url));
+                new Video(videoId, title, thumbnails?.default?.url));
     }
 
     get title() {

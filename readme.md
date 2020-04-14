@@ -50,8 +50,8 @@ syncher.download();
 ##### `<Buffer> buffer`
 ##### `string Video.idFromFileName(string fileName)`
 ##### `string Video.titleFromFileName(string fileName)`
-##### `Video.on('data', buffer => {})`
-##### `Video.on('end', buffer => {})`
+##### `Video.on('data', () => {})`
+##### `Video.on('end', () => {})`
 
 ### VideoStatus
 

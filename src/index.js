@@ -5,4 +5,5 @@ module.exports = {
     Search: require('./VideoContainer/Search'),
     SplitPrinter: require('./print/SplitPrinter'),
     Video: require('./Video'),
+    setApiKey: require('./youtube').setApiKey,
 };

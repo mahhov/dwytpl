@@ -200,6 +200,15 @@ skipped 0. downloaded 7. failed 0. remaining 58. total 65
 0008 Gaspard_de_la_nuit_I_Ondine#c0y8JfJsK8o      done downloading (162.20 seconds)
 ```
 
+### API key
+
+By default, this module uses a public API key for its requests. It's very likely this will repeatedly surpass quotas and not work. Instead, it's recommended to specify an API key unique to your project using the `setApiKey(string)` method.
+
+```$xslt
+const dwytpl = require('dwytpl');
+dwytpl.setApiKey('...');
+```
+
 ## note on Stream's
 
 this module and its api use `Stream`s extensively. For detailed information about streams, see the [bs-better-stream npm package](https://www.npmjs.com/package/bs-better-stream).

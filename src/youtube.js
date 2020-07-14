@@ -1,6 +1,9 @@
 const axios = require('axios');
 const API_ENDPOINT = 'https://www.googleapis.com/youtube/v3';
-const API_KEY = 'AIzaSyAdkXuGc2f7xJg5FLTWBi2cRUhzAJD-eC0';
+const DEFAULT_API_KEY = 'AIzaSyAdkXuGc2f7xJg5FLTWBi2cRUhzAJD-eC0';
+
+let apiKey = DEFAULT_API_KEY;
+const setApiKey = value => apiKey = value;
 
 const get = async (path, queryParamsObj) =>
     (await axios.get(`${API_ENDPOINT}/${path}?${queryParams(queryParamsObj)}`)).data;
@@ -9,18 +12,18 @@ const queryParams = (params = {}) =>
     Object.entries(params).map(([key, value]) => `${key}=${value}`).join('&');
 
 const getPlaylistOverview = playlistId =>
-    get('playlists', {part: 'snippet,contentDetails', id: playlistId, key: API_KEY});
+    get('playlists', {part: 'snippet,contentDetails', id: playlistId, key: apiKey});
 
 const getPlaylistPage = (playlistId, pageToken) =>
-    get('playlistItems', {part: 'snippet', maxResults: 50, pageToken, playlistId, key: API_KEY});
+    get('playlistItems', {part: 'snippet', maxResults: 50, pageToken, playlistId, key: apiKey});
 
 const getSearch = (query, maxResults) =>
-    get('search', {part: 'snippet', maxResults, type: 'video', q: query, key: API_KEY});
+    get('search', {part: 'snippet', maxResults, type: 'video', q: query, key: apiKey});
 
 const getSearchRelated = (relatedToVideoId, maxResults) =>
-    get('search', {part: 'snippet', maxResults, type: 'video', relatedToVideoId, key: API_KEY});
+    get('search', {part: 'snippet', maxResults, type: 'video', relatedToVideoId, key: apiKey});
 
 const getVideosTitles = ids =>
-    get('videos', {part: 'snippet', id: ids.join(','), key: API_KEY});
+    get('videos', {part: 'snippet', id: ids.join(','), key: apiKey});
 
-module.exports = {getPlaylistOverview, getPlaylistPage, getSearch, getSearchRelated, getVideosTitles};
+module.exports = {setApiKey, getPlaylistOverview, getPlaylistPage, getSearch, getSearchRelated, getVideosTitles};

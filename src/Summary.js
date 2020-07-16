@@ -1,4 +1,3 @@
-const $tream = require('bs-better-stream');
 const SummaryStatus = require('./SummaryStatus');
 
 class Summary {

@@ -84,7 +84,7 @@ class Status {
         /* abstract */
     }
 
-    progressStatus_(percent, time, size, ...additionalParamters) {
+    progressStatus_(percent, time, size, ...additionalParameters) {
         /* abstract */
     }
 

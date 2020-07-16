@@ -86,7 +86,8 @@ stream values will be of the format
  ```
  [
     'skipped <skipped count>. downloaded <downloaded count>. failed <failed count>. remaining <remaining count>. total <total count>',
-    '<percent> (<time estimate> remaining)'
+    '<percent> (<time estimate> remaining)',
+    {number total, number predownloaded, number downloaded, number failed}
  ]
  ```
 
@@ -167,7 +168,7 @@ let splitPrinter = new dwytpl.SplitPrinter(1, 2, 10, 30);
 tracker.title.each(titleLines =>
     splitPrinter.titleLines = titleLines);
 tracker.summary.each(summaryLines =>
-    splitPrinter.summaryLines = summaryLines);
+    splitPrinter.summaryLines = summaryLines.slice(0, 2));
 tracker.progress.each(progressLines =>
     splitPrinter.progressLines = progressLines);
 tracker.messages.each(messageLines =>

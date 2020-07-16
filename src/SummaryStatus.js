@@ -9,7 +9,7 @@ class SummaryStatus extends Status {
         let remaining = total - predownloaded - downloaded - failed;
         let counts = `skipped ${predownloaded}. downloaded ${downloaded}. failed ${failed}. remaining ${remaining}. total ${total}`;
         let estimate = `${percent} (${time} remaining)`;
-        return [counts, estimate];
+        return [counts, estimate, {total, predownloaded, downloaded, failed}];
     }
 }
 

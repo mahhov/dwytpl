@@ -71,15 +71,7 @@ syncher.download();
 
 ### Tracker
 
-##### `Stream<string[]> Tracker.title`
-
-stream values will be of the format 
-
-```
-['<playlist title> [<playlist length>]']
-```
-
-##### `Stream<string[]> Tracker.summary`
+##### `Stream<[string counts, string estimate, {<see below>}]> Tracker.summary`
 
 stream values will be of the format
  

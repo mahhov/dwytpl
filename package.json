@@ -1,6 +1,6 @@
 {
   "name": "dwytpl",
-  "version": "5.5.8",
+  "version": "5.6.0",
   "description": "download youtube playlists",
   "main": "src/index",
   "scripts": {

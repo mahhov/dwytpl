@@ -47,6 +47,7 @@ syncher.download();
 ##### `string title`
 ##### `string fileName`
 ##### `string thumbnail`
+##### `MemoryWriteStream getWriteStream`
 ##### `<Buffer> buffer`
 ##### `string Video.idFromFileName(string fileName)`
 ##### `string Video.titleFromFileName(string fileName)`
@@ -61,6 +62,12 @@ syncher.download();
 ##### `bool failed`
 ##### `Array<{string dir, string name}> downloadFiles`
 
+### MemoryWriteStream
+
+##### `<Buffer> buffer`
+##### `void writeToFile(string path)`
+##### `Promise promise`
+ 
 ### Syncher
 
 ##### `new Syncher(Stream<Video> videos, string downloadDir, string[] alternateDirs, bool moveFromAltneativeDirs = false)`

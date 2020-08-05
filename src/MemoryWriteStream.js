@@ -1,10 +1,12 @@
 const stream = require('stream');
 const fs = require('fs');
+const PromiseW = require('promise-w');
 
 class MemoryWriteStream extends stream.Writable {
     constructor() {
         super();
         this.chunks_ = [];
+        this.promise = new PromiseW();
     }
 
     _write(chunk, enc, next) {

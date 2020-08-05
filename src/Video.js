@@ -13,29 +13,15 @@ class Video extends EventEmitter {
         this.status = new VideoStatus();
     }
 
-    download(downloadDir, ytdlOptions = {filter: 'audioonly'}) {
+    async download(downloadDir, ytdlOptions = {filter: 'audioonly'}) {
         // todo doing this in sync slows us down? (exists, mkdir, copyfile)
         if (!fs.existsSync(downloadDir))
             fs.mkdirSync(downloadDir);
 
-        let stream = this.getStream_(ytdlOptions);
-        try {
-            this.writeStream_ = new MemoryWriteStream();
-            stream.pipe(this.writeStream_);
-            stream.once('response', () => this.status.onStart());
-            stream.on('error', error => this.status.onFail(error));
-            stream.on('progress', (chunkLength, downloadedSize, totalSize) => {
-                this.emit('data');
-                this.status.onProgress(downloadedSize, totalSize)
-            });
-            stream.on('end', async () => {
-                await this.writeStream_.writeToFile(`${downloadDir}/${this.fileName}`);
-                this.emit('end');
-                this.status.onSuccess(downloadDir, this.fileName);
-            });
-        } catch (error) {
-            this.status.onFail(error);
-        }
+        await this.getWriteStream(ytdlOptions).promise;
+        await this.writeStream_.writeToFile(`${downloadDir}/${this.fileName}`);
+        this.emit('end');
+        this.status.onSuccess(downloadDir, this.fileName);
     }
 
     move(dir) {
@@ -61,8 +47,29 @@ class Video extends EventEmitter {
         return `${this.title}-${this.id}.webm`;
     }
 
+    getWriteStream(ytdlOptions = {filter: 'audioonly'}) {
+        if (!this.writeStream_) {
+            this.writeStream_ = new MemoryWriteStream();
+            try {
+                let stream = this.getStream_(ytdlOptions);
+                stream.pipe(this.writeStream_);
+                stream.once('response', () => this.status.onStart());
+                stream.on('error', error => this.status.onFail(error));
+                stream.on('progress', (chunkLength, downloadedSize, totalSize) => {
+                    this.emit('data');
+                    this.status.onProgress(downloadedSize, totalSize)
+                });
+                stream.on('end', () => this.writeStream_.promise.resolve());
+            } catch (error) {
+                this.status.onFail(error);
+                this.writeStream_.promise.reject();
+            }
+        }
+        return this.writeStream_;
+    }
+
     get buffer() {
-        return this.writeStream_?.buffer;
+        return this.getWriteStream().buffer;
     }
 
     static idFromFileName(fileName) {

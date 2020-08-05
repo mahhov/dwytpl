@@ -33,10 +33,9 @@ class Video extends EventEmitter {
     }
 
     stopDownload() {
-        if (!this.streamCache_)
-            return;
-        this.streamCache_.destroy();
+        this.streamCache_?.destroy();
         this.streamCache_ = null;
+        this.writeStream_ = null;
     }
 
     getStream_(ytdlOptions) {

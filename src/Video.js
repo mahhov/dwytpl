@@ -20,7 +20,6 @@ class Video extends EventEmitter {
 
         await this.getWriteStream(ytdlOptions).promise;
         await this.writeStream_.writeToFile(`${downloadDir}/${this.fileName}`);
-        this.emit('end');
         this.status.onSuccess(downloadDir, this.fileName);
     }
 
@@ -58,7 +57,10 @@ class Video extends EventEmitter {
                     this.emit('data');
                     this.status.onProgress(downloadedSize, totalSize)
                 });
-                stream.on('end', () => this.writeStream_.promise.resolve());
+                stream.on('end', () => {
+                    this.emit('end');
+                    this.writeStream_.promise.resolve();
+                });
             } catch (error) {
                 this.status.onFail(error);
                 this.writeStream_.promise.reject();

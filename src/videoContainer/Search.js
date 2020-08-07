@@ -13,7 +13,7 @@ class Search extends VideoContainer {
             .pluck('items')
             .flatten()
             .map(({id: {videoId}, snippet: {title, thumbnails}}) =>
-                ({videoId, title, thumbnail: thumbnails && thumbnails.default.url}))
+                ({videoId, title, thumbnail: thumbnails?.default.url}))
             .uniqueOn('videoId')
             .map(({videoId, title, thumbnail}) => new Video(videoId, title, thumbnail));
     }

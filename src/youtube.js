@@ -1,8 +1,7 @@
 const axios = require('axios');
 const API_ENDPOINT = 'https://www.googleapis.com/youtube/v3';
-const DEFAULT_API_KEY = 'AIzaSyAdkXuGc2f7xJg5FLTWBi2cRUhzAJD-eC0';
 
-let apiKey = DEFAULT_API_KEY;
+let apiKey = 'AIzaSyAdkXuGc2f7xJg5FLTWBi2cRUhzAJD-eC0';
 const setApiKey = value => apiKey = value;
 
 const get = async (path, queryParamsObj) =>

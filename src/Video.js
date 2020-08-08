@@ -48,11 +48,15 @@ class Video extends EventEmitter {
     getWriteStream(ytdlOptions = {filter: 'audioonly'}) {
         if (!this.writeStream_) {
             this.writeStream_ = new MemoryWriteStream();
+            let onError = (error) => {
+                this.status.onFail(error);
+                this.writeStream_.promise.reject();
+            };
             try {
                 let stream = this.getStream_(ytdlOptions);
                 stream.pipe(this.writeStream_);
                 stream.once('response', () => this.status.onStart());
-                stream.on('error', error => this.status.onFail(error));
+                stream.on('error', onError);
                 stream.on('progress', (chunkLength, downloadedSize, totalSize) => {
                     this.emit('data');
                     this.status.onProgress(downloadedSize, totalSize)
@@ -62,8 +66,7 @@ class Video extends EventEmitter {
                     this.writeStream_.promise.resolve();
                 });
             } catch (error) {
-                this.status.onFail(error);
-                this.writeStream_.promise.reject();
+                onError(error);
             }
         }
         return this.writeStream_;

@@ -46,11 +46,12 @@ class Video extends EventEmitter {
     }
 
     getWriteStream(ytdlOptions = {filter: 'audioonly'}) {
-        if (!this.writeStream_) {
+        if (!this.writeStream_ || this.writeStream_.promise.rejected) {
             this.writeStream_ = new MemoryWriteStream();
             let onError = (error) => {
                 this.status.onFail(error);
-                this.writeStream_.promise.reject();
+                this.writeStream_.promise.reject(error);
+                this.streamCache_ = null;
             };
             try {
                 let stream = this.getStream_(ytdlOptions);

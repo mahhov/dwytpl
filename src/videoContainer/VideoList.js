@@ -7,7 +7,7 @@ class VideoList extends VideoContainer {
     constructor() {
         super();
         this.videoCache_ = {};
-        this.ids_ = $tream();
+        this.ids_ = new $tream();
         this.videos_ = this.ids_
             .pluck('items')
             .flatten()

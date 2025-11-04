@@ -8,7 +8,7 @@ class Search extends VideoContainer {
         super();
         this.searchCache_ = {};
         this.searchRelatedCache_ = {};
-        this.queries_ = $tream();
+        this.queries_ = new $tream();
         this.videos_ = this.queries_
             .pluck('items')
             .flatten()

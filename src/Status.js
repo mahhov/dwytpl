@@ -3,7 +3,7 @@ const PromiseW = require('promise-w');
 
 class Status {
     constructor() {
-        this.stream = $tream();
+        this.stream = new $tream();
         this.promiseWrap_ = new PromiseW();
     }
 

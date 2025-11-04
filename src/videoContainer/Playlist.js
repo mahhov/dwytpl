@@ -14,7 +14,7 @@ class Playlist extends VideoContainer {
 
     initVideos_() {
         this.initVideosDone_ = new PromiseW();
-        let pages = $tream();
+        let pages = new $tream();
         let responses = pages
             .map(page => this.getPage_(page))
             .wait();

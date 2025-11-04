@@ -20,7 +20,7 @@ class Syncher {
 
     async setDownloadDir_(downloadDir, alternateDirs, moveFromAlternativeDirs) {
         this.downloadDir_ = downloadDir;
-        this.dirs_ = $tream().write(downloadDir, ...alternateDirs);
+        this.dirs_ = new $tream().write(downloadDir, ...alternateDirs);
         this.moveFromAlternativeDirs_ = moveFromAlternativeDirs;
         return this.recheckDirsPromise_ = this.recheckDirs_();
     }

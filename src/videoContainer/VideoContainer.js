@@ -1,6 +1,6 @@
 class VideoContainer {
     get videos() {
-        return this.videos_ || $tream();
+        return this.videos_ || new $tream();
     }
 }
 

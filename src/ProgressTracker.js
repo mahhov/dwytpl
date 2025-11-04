@@ -2,8 +2,8 @@ const $tream = require('bs-better-stream');
 
 class ProgressTracker {
     constructor(progressSize) {
-        this.progressStream = $tream();
-        this.messageStream = $tream();
+        this.progressStream = new $tream();
+        this.messageStream = new $tream();
         this.progressLines_ = [];
         this.removedProgressLines_ = [];
         this.messageLines_ = [];
